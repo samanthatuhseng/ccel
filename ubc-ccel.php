@@ -3,7 +3,7 @@
  * Plugin Name:       UBC CCEL
  * Plugin URI:        https://github.com/ubc/ccel
  * Description:       The plugin powers the CCEL project with lession, learning objective and theme custom post types. Create block templates for each custom post types. Create filtering system to optimize the user experience to find what user needs.
- * Version:           0.0.1
+ * Version:           1.0.0
  * Author:            Samantha Tseng, Richard Tape, Kelvin Xu
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-define( 'UBC_CCEL_VERSION', '0.0.1' );
+define( 'UBC_CCEL_VERSION', '1.0.0' );
 define( 'UBC_CCEL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'UBC_CCEL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
