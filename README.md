@@ -1,5 +1,4 @@
 # UBC CCEL
-======
 New website project for the SIL curriculum.
 
 ## Local Environment
