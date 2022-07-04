@@ -13,6 +13,11 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 1.0.2
+- Create custom post types for learning objective, theme and lesson.
+- Create custom taxonomy 'Tag' for each custom post type.
+- Create p2p plugin connections.
+
 ### 1.0.1
 - Enqueued filter assets including JavaScript and CSS to the homepage.
 - Updated package.json
