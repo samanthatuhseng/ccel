@@ -13,5 +13,9 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 1.0.1
+- Enqueued filter assets including JavaScript and CSS to the homepage.
+- Updated package.json
+
 ### 1.0.0
 - Initial set up for the project.
