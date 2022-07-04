@@ -36,12 +36,12 @@ class CCELCore {
 		);
 
 		wp_register_style(
-			'ubc-h5p-ownership-transfer-css',
+			'ubc-ccel-filter-styles',
 			UBC_CCEL_PLUGIN_URL . 'dist/filter.css',
 			array(),
 			filemtime( UBC_CCEL_PLUGIN_DIR . 'dist/filter.css' )
 		);
-		wp_enqueue_style( 'ubc-h5p-ownership-transfer-css' );
+		wp_enqueue_style( 'ubc-ccel-filter-styles' );
 	}
 
 }
