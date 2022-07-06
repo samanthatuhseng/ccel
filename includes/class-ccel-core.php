@@ -22,6 +22,10 @@ class CCELCore {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_filter_assets' ) );
 		add_action( 'init', array( $this, 'register_post_type_and_taxonomies' ) );
 		add_action( 'p2p_init', array( $this, 'create_post_connection_types' ) );
+
+		// Because this is an indeterminate post type, the shortcode direction will always be 'from'
+		// and the p2p plugin did not provide a shortcode to list 'to' posts.
+		add_shortcode( 'p2p_connected_to', array( $this, 'p2p_connected_to' ) );
 	}
 
 	public function enqueue_filter_assets() {
@@ -265,7 +269,47 @@ class CCELCore {
 				'create' => __( 'Add Learning Objectives', 'ubc_ccel' ),
 			),
 		) );
+
+		p2p_register_connection_type( array(
+			'name' => 'related_lessons',
+			'from' => 'ccel_lesson',
+			'to' => 'ccel_lesson',
+			'reciprocal' => true,
+			'title' => __( 'Related Lessons', 'ubc_ccel' ),
+			'to_labels' => array(
+				'singular_name' => __( 'Lesson', 'ubc_ccel' ),
+				'search_items' => __( 'Search Lesson', 'ubc_ccel' ),
+				'not_found' => __( 'No Lesson found.', 'ubc_ccel' ),
+				'create' => __( 'Add Lessons', 'ubc_ccel' ),
+			)
+		) );
 	}// end create_post_connection_types()
+
+	/**
+	 * Because this is an indeterminate post type, the shortcode direction will always be 'from'
+	 * p2p plugin does not provide a shortcode to display the posts retrieved from 'to' direction
+	 */
+	public function p2p_connected_to( $atts ) {
+		global $post;
+
+		$attributes = shortcode_atts( array(
+			'type' => '',
+		), $atts );
+
+		$to_posts = p2p_type( $attributes['type'] )->set_direction( 'to' )->get_connected( $post->ID )->get_posts();
+
+		if( count($to_posts) === 0 ) {
+			return;
+		} 
+
+		$return = '<ul id="' . $attributes['type'] . '_list_to">';
+		foreach ($to_posts as $key => $to_post) {
+			$return .= '<li><a href="' . esc_attr( $to_post->guid ) . '">' . esc_textarea( $to_post->post_title ) . '</li>';
+		}
+		$return .= '</ul>';
+	
+		return $return;
+	}//end p2p_connected_to()
 
 }
 
