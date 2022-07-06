@@ -1,6 +1,12 @@
 # UBC CCEL
 New website project for the SIL curriculum.
 
+## Shortcodes
+- Objectives prerequisites: [p2p_connected type=learning_objective_prerequisites]
+- Objectives build towards: [p2p_connected_to type=learning_objective_prerequisites]
+- Objectives achieved by lessons: [p2p_connected type=learning_objective_lesson]
+- Objectives align with themes: [p2p_connected type=learning_objective_theme]
+
 ## Local Environment
 Install node packages
 `npm install`
@@ -12,6 +18,11 @@ Build JS and CSS for production
 `npm build`
 
 ## Change Log
+
+### 1.0.3
+- Registered connection type for Related Lessons
+- Created a custom shortcode to display posts from 'to' direction.
+- Updated shortcodes in documentation
 
 ### 1.0.2
 - Create custom post types for learning objective, theme and lesson.

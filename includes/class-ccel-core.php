@@ -231,8 +231,8 @@ class CCELCore {
 			'from' => 'ccel_lo',
 			'to' => 'ccel_lesson',
 			'title' => array(
-				'from' => __( 'Taught By Lessons', 'ubc_ccel' ),
-				'to' => __( 'Teaches Learning Objectives', 'ubc_ccel' )
+				'from' => __( 'Achieved by lesson', 'ubc_ccel' ),
+				'to' => __( 'Achieves learning objective', 'ubc_ccel' )
 			),
 			'to_labels' => array(
 				'singular_name' => __( 'Lesson', 'ubc_ccel' ),
