@@ -19,6 +19,11 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 1.0.4
+- Add composer package
+- Fixed PHPCS coding standard issues
+- Added block patterns for learning objective, theme and lesson
+
 ### 1.0.3
 - Registered connection type for Related Lessons
 - Created a custom shortcode to display posts from 'to' direction.

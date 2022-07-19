@@ -58,7 +58,7 @@ class CCEL_Core {
 
 	/**
 	 * Register custom post types and custom taxonomies below.
-	 * 1. custom post types such as theme, learning objective, and lession
+	 * 1. custom post types such as theme, learning objective, and lesson
 	 * 2. custom taxonomies for each post type. Un-hierachical
 	 *
 	 * @return void
@@ -97,7 +97,7 @@ class CCEL_Core {
 			'not_found_in_trash' => __( 'Not found in Trash', 'ubc_ccel' ),
 		);
 
-		$lession_labels = array(
+		$lesson_labels = array(
 			'name'               => _x( 'Lessons', 'Post Type General Name', 'ubc_ccel' ),
 			'singular_name'      => _x( 'Lesson', 'Post Type Singular Name', 'ubc_ccel' ),
 			'menu_name'          => __( 'Lessons', 'ubc_ccel' ),
@@ -144,7 +144,7 @@ class CCEL_Core {
 		register_post_type(
 			'ccel_lesson',
 			array(
-				'labels'       => $lession_labels,
+				'labels'       => $lesson_labels,
 				'public'       => true,
 				'menu_icon'    => 'dashicons-category',
 				'supports'     => array( 'editor', 'thumbnail', 'title', 'excerpt', 'revision' ),

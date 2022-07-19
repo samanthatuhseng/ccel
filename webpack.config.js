@@ -9,6 +9,7 @@ module.exports = function( env, argv ) {
 		devtool: isDev ? 'source-map' : false,
 		entry: {
 			filter: './assets/filter.js',
+			patterns: './assets/patterns.js'
 		},
 		output: {
 			path: path.join( __dirname, 'dist' ),
