@@ -1,8 +1,9 @@
 import './filter.scss';
 
-( function( $ ) {
+(function ($) {
+	// eslint-disable-next-line prettier/prettier
 	$( document ).ready( function() {
 
 	} );
-// eslint-disable-next-line no-undef
-}( jQuery ) );
+	// eslint-disable-next-line no-undef
+})(jQuery);
