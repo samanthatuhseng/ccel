@@ -21,6 +21,7 @@ Build JS and CSS for production
 
 ### 1.0.5
 - Change all labels and slugs from 'learning objective' to 'learning outcome'
+- Added React related npm packages
 
 ### 1.0.4
 - Add composer package
