@@ -31,6 +31,8 @@ define( 'UBC_CCEL_BLOCKPATTERNS_NAMESPACE', 'ccel' );
 function init() {
 	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-core.php';
 	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-block-pattern.php';
+	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-block.php';
+
 }
 
 add_action( 'plugin_loaded', __NAMESPACE__ . '\\init' );
