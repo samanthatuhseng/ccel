@@ -1,22 +1,23 @@
-const path = require( 'path' );
-const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
+const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-module.exports = function( env, argv ) {
+module.exports = function (env, argv) {
 	const isDev = 'development' === argv.mode ? true : false;
 	return {
 		devtool: isDev ? 'source-map' : false,
 		entry: {
 			filter: './assets/filter.js',
-			patterns: './assets/patterns.js'
+			patterns: './assets/patterns.js',
+			blocks: './assets/blocks.js',
 		},
 		output: {
-			path: path.join( __dirname, 'dist' ),
+			path: path.join(__dirname, 'dist'),
 			filename: '[name].js',
 		},
 		watchOptions: {
-			ignored: [ 'node_modules', path.join( __dirname, 'dist' ) ],
+			ignored: ['node_modules', path.join(__dirname, 'dist')],
 		},
 		module: {
 			rules: [
@@ -38,8 +39,8 @@ module.exports = function( env, argv ) {
 								plugins() {
 									// post css plugins, can be exported to postcss.config.js
 									return [
-										require( 'precss' ),
-										require( 'autoprefixer' ),
+										require('precss'),
+										require('autoprefixer'),
 									];
 								},
 								sourceMap: isDev,
@@ -55,7 +56,7 @@ module.exports = function( env, argv ) {
 				},
 				{
 					test: /\.css$/i,
-					use: [ 'style-loader', 'css-loader' ],
+					use: ['style-loader', 'css-loader'],
 				},
 				{
 					test: /\.(js|jsx)$/, // Identifies which file or files should be transformed.
@@ -78,24 +79,23 @@ module.exports = function( env, argv ) {
 			],
 		},
 		plugins: [
-			new MiniCssExtractPlugin( {
-
+			new MiniCssExtractPlugin({
 				// Options similar to the same options in webpackOptions.output
 				// both options are optional
 				filename: '../dist/[name].css',
-			} ),
+			}),
 		],
 		optimization: isDev
 			? {
-				minimizer: [
-					new UglifyJsPlugin( {
-						cache: true,
-						parallel: true,
-						sourceMap: isDev, // set to true if you want JS source maps
-					} ),
-					new OptimizeCSSAssetsPlugin( {} ),
-				],
-			}
+					minimizer: [
+						new UglifyJsPlugin({
+							cache: true,
+							parallel: true,
+							sourceMap: isDev, // set to true if you want JS source maps
+						}),
+						new OptimizeCSSAssetsPlugin({}),
+					],
+			  }
 			: {},
 	};
 };
