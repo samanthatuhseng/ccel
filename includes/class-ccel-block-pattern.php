@@ -29,7 +29,7 @@ class CCEL_Block_Pattern {
 
 		register_block_pattern_category(
 			'ubcccel_lo',
-			array( 'label' => __( 'CCEL - Learning Objective', 'ubc-block-patterns' ) )
+			array( 'label' => __( 'CCEL - Learning Outcome', 'ubc-block-patterns' ) )
 		);
 
 		register_block_pattern_category(

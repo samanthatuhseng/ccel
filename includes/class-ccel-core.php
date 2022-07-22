@@ -58,7 +58,7 @@ class CCEL_Core {
 
 	/**
 	 * Register custom post types and custom taxonomies below.
-	 * 1. custom post types such as theme, learning objective, and lesson
+	 * 1. custom post types such as theme, learning outcome, and lesson
 	 * 2. custom taxonomies for each post type. Un-hierachical
 	 *
 	 * @return void
@@ -81,18 +81,18 @@ class CCEL_Core {
 			'not_found_in_trash' => __( 'Not found in Trash', 'ubc_ccel' ),
 		);
 
-		$learning_objective_labels = array(
-			'name'               => _x( 'Learning Objectives', 'Post Type General Name', 'ubc_ccel' ),
-			'singular_name'      => _x( 'Learning Objective', 'Post Type Singular Name', 'ubc_ccel' ),
-			'menu_name'          => __( 'Learning Objectives', 'ubc_ccel' ),
-			'parent_item_colon'  => __( 'Parent Learning Objective:', 'ubc_ccel' ),
-			'all_items'          => __( 'All Learning Objectives', 'ubc_ccel' ),
-			'view_item'          => __( 'View Learning Objective', 'ubc_ccel' ),
-			'add_new_item'       => __( 'Add New Learning Objective', 'ubc_ccel' ),
+		$learning_outcome_labels = array(
+			'name'               => _x( 'Learning Outcomes', 'Post Type General Name', 'ubc_ccel' ),
+			'singular_name'      => _x( 'Learning Outcome', 'Post Type Singular Name', 'ubc_ccel' ),
+			'menu_name'          => __( 'Learning Outcomes', 'ubc_ccel' ),
+			'parent_item_colon'  => __( 'Parent Learning Outcome:', 'ubc_ccel' ),
+			'all_items'          => __( 'All Learning Outcomes', 'ubc_ccel' ),
+			'view_item'          => __( 'View Learning Outcome', 'ubc_ccel' ),
+			'add_new_item'       => __( 'Add New Learning Outcome', 'ubc_ccel' ),
 			'add_new'            => __( 'Add New', 'ubc_ccel' ),
-			'edit_item'          => __( 'Edit Learning Objective', 'ubc_ccel' ),
-			'update_item'        => __( 'Update Learning Objective', 'ubc_ccel' ),
-			'search_items'       => __( 'Search Learning Objective', 'ubc_ccel' ),
+			'edit_item'          => __( 'Edit Learning Outcome', 'ubc_ccel' ),
+			'update_item'        => __( 'Update Learning Outcome', 'ubc_ccel' ),
+			'search_items'       => __( 'Search Learning Outcome', 'ubc_ccel' ),
 			'not_found'          => __( 'Not found', 'ubc_ccel' ),
 			'not_found_in_trash' => __( 'Not found in Trash', 'ubc_ccel' ),
 		);
@@ -130,13 +130,13 @@ class CCEL_Core {
 		register_post_type(
 			'ccel_lo',
 			array(
-				'labels'       => $learning_objective_labels,
+				'labels'       => $learning_outcome_labels,
 				'public'       => true,
 				'menu_icon'    => 'dashicons-category',
 				'supports'     => array( 'editor', 'thumbnail', 'title', 'excerpt', 'revision' ),
 				'show_in_rest' => true,
 				'rewrite'      => array(
-					'slug' => 'learning-objectives',
+					'slug' => 'learning-outcomes',
 				),
 			)
 		);
@@ -206,15 +206,15 @@ class CCEL_Core {
 
 	/**
 	 * Registered p2p plugin connection types.
-	 * 1. Learning Objective - Learning Objective
-	 * 2. Learning Object - Lesson
-	 * 3. Learning Object - Theme
+	 * 1. Learning Outcome - Learning Outcome
+	 * 2. Learning Outcome - Lesson
+	 * 3. Learning Outcome - Theme
 	 */
 	public function create_post_connection_types() {
 
 		p2p_register_connection_type(
 			array(
-				'name'        => 'learning_objective_prerequisites',
+				'name'        => 'learning_outcome_prerequisites',
 				'from'        => 'ccel_lo',
 				'to'          => 'ccel_lo',
 				'title'       => array(
@@ -222,28 +222,28 @@ class CCEL_Core {
 					'to'   => __( 'Build Towards', 'ubc_ccel' ),
 				),
 				'from_labels' => array(
-					'singular_name' => __( 'Learning Objective', 'ubc_ccel' ),
-					'search_items'  => __( 'Search Learning Objective', 'ubc_ccel' ),
-					'not_found'     => __( 'No Learning Objective found.', 'ubc_ccel' ),
-					'create'        => __( 'Add Learning Objectives', 'ubc_ccel' ),
+					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
+					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
+					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
+					'create'        => __( 'Add Learning Outcomes', 'ubc_ccel' ),
 				),
 				'to_labels'   => array(
-					'singular_name' => __( 'Learning Objective', 'ubc_ccel' ),
-					'search_items'  => __( 'Search Learning Objective', 'ubc_ccel' ),
-					'not_found'     => __( 'No Learning Objective found.', 'ubc_ccel' ),
-					'create'        => __( 'Add Learning Objectives', 'ubc_ccel' ),
+					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
+					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
+					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
+					'create'        => __( 'Add Learning Outcomes', 'ubc_ccel' ),
 				),
 			)
 		);
 
 		p2p_register_connection_type(
 			array(
-				'name'        => 'learning_objective_lesson',
+				'name'        => 'learning_outcome_lesson',
 				'from'        => 'ccel_lo',
 				'to'          => 'ccel_lesson',
 				'title'       => array(
 					'from' => __( 'Achieved by lesson', 'ubc_ccel' ),
-					'to'   => __( 'Achieves learning objective', 'ubc_ccel' ),
+					'to'   => __( 'Achieves learning outcome', 'ubc_ccel' ),
 				),
 				'to_labels'   => array(
 					'singular_name' => __( 'Lesson', 'ubc_ccel' ),
@@ -252,22 +252,22 @@ class CCEL_Core {
 					'create'        => __( 'Add Lessons', 'ubc_ccel' ),
 				),
 				'from_labels' => array(
-					'singular_name' => __( 'Learning Objective', 'ubc_ccel' ),
-					'search_items'  => __( 'Search Learning Objective', 'ubc_ccel' ),
-					'not_found'     => __( 'No Learning Objective found.', 'ubc_ccel' ),
-					'create'        => __( 'Add Learning Objectives', 'ubc_ccel' ),
+					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
+					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
+					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
+					'create'        => __( 'Add Learning Outcomes', 'ubc_ccel' ),
 				),
 			)
 		);
 
 		p2p_register_connection_type(
 			array(
-				'name'        => 'learning_objective_theme',
+				'name'        => 'learning_outcome_theme',
 				'from'        => 'ccel_lo',
 				'to'          => 'ccel_theme',
 				'title'       => array(
 					'from' => __( 'Align with themes', 'ubc_ccel' ),
-					'to'   => __( 'Align learning objectives', 'ubc_ccel' ),
+					'to'   => __( 'Align learning outcomes', 'ubc_ccel' ),
 				),
 				'to_labels'   => array(
 					'singular_name' => __( 'Theme', 'ubc_ccel' ),
@@ -276,10 +276,10 @@ class CCEL_Core {
 					'create'        => __( 'Add Themes', 'ubc_ccel' ),
 				),
 				'from_labels' => array(
-					'singular_name' => __( 'Learning Objective', 'ubc_ccel' ),
-					'search_items'  => __( 'Search Learning Objective', 'ubc_ccel' ),
-					'not_found'     => __( 'No Learning Objective found.', 'ubc_ccel' ),
-					'create'        => __( 'Add Learning Objectives', 'ubc_ccel' ),
+					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
+					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
+					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
+					'create'        => __( 'Add Learning Outcomes', 'ubc_ccel' ),
 				),
 			)
 		);

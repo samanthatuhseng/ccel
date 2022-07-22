@@ -12,7 +12,7 @@ $content = file_get_contents( __DIR__ . '/pattern.html', 'r' );
 register_block_pattern(
 	UBC_CCEL_BLOCKPATTERNS_NAMESPACE . '/lo-v3',
 	array(
-		'title'      => __( 'Learning Objective V3', 'ubc-block-patterns' ),
+		'title'      => __( 'Learning Outcome V3', 'ubc-block-patterns' ),
 		'categories' => array( 'ubcccel_lo' ),
 		'blockTypes' => array( 'core/paragraph', 'core/post-content' ),
 		'postTypes'  => array( 'ccel_lo' ),

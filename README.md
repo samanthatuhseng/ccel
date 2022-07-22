@@ -19,6 +19,9 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 1.0.5
+- Change all labels and slugs from 'learning objective' to 'learning outcome'
+
 ### 1.0.4
 - Add composer package
 - Fixed PHPCS coding standard issues
