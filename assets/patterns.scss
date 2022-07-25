@@ -1,10 +1,67 @@
-@import './../includes/block-patterns/lesson-v1/style.scss';
-@import './../includes/block-patterns/lesson-v2/style.scss';
-@import './../includes/block-patterns/lesson-v3/style.scss';
-@import './../includes/block-patterns/lo-v1/style.scss';
-@import './../includes/block-patterns/lo-v2/style.scss';
-@import './../includes/block-patterns/lo-v3/style.scss';
-@import './../includes/block-patterns/lo-v4/style.scss';
-@import './../includes/block-patterns/theme-v1/style.scss';
-@import './../includes/block-patterns/theme-v2/style.scss';
-@import './../includes/block-patterns/theme-v3/style.scss';
+@import './../includes/block-patterns/lesson/style.scss';
+@import './../includes/block-patterns/lo/style.scss';
+@import './../includes/block-patterns/theme/style.scss';
+
+// Remove editor block margin in the sidebar
+.ccel-post-type__sidebar{
+
+    // add padding for the sidebar
+    padding: 30px 30px;
+
+    // Remove padding of the block in the editor
+    .wp-block {
+        margin: 0 !important;
+
+        &:where(h1, h2, h3, h4, h5, h6) {
+            margin-bottom: 10px !important;
+        }
+    }
+
+    h1, h2, h3, h4, h5, h6{
+        margin-top: 0;
+        margin-bottom: 10px !important;
+        text-transform: uppercase;
+    }
+}
+
+.taxonomy-ccel_lesson_tag,
+.taxonomy-ccel_lo_tag{
+
+    > .wp-block-post-terms__separator{
+        display: none;
+    }
+
+    > a {
+        background-color: #002145;
+        border: none;
+        color: white;
+        list-style: none;
+        padding: 0px 6px;
+        text-align: center;
+        text-decoration: none !important;
+        margin: 2px 2px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .wp-block-post-terms__prefix,
+    .wp-block-post-terms__suffix{
+        display: none;
+    }
+}
+
+// Relationship list styling
+#learning_outcome_theme_list,
+#learning_outcome_prerequisites_list,
+#learning_outcome_prerequisites_list_to,
+#learning_outcome_lesson_list,
+#related_lessons_list{
+    font-size: .9rem;
+    margin-left: 0;
+    margin-top: 0;
+    padding-left: 20px;
+
+    a{
+        font-style: italic;
+    }
+}

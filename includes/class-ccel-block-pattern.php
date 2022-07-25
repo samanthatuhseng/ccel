@@ -37,16 +37,9 @@ class CCEL_Block_Pattern {
 			array( 'label' => __( 'CCEL - Lesson', 'ubc-block-patterns' ) )
 		);
 
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/theme-v1/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/theme-v2/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/theme-v3/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lo-v1/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lo-v2/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lo-v3/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lo-v4/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lesson-v1/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lesson-v2/register.php';
-		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lesson-v3/register.php';
+		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/theme/register.php';
+		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lo/register.php';
+		require_once UBC_CCEL_PLUGIN_DIR . 'includes/block-patterns/lesson/register.php';
 	}
 
 	/**
