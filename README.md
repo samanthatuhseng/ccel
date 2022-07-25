@@ -19,9 +19,13 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 1.0.6
+- Update to block patterns and styling
+
 ### 1.0.5
 - Change all labels and slugs from 'learning objective' to 'learning outcome'
 - Added React related npm packages
+- Create Gutenberg blocks for each 
 
 ### 1.0.4
 - Add composer package
