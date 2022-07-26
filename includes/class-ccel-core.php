@@ -327,7 +327,7 @@ class CCEL_Core {
 
 		$return = '<ul id="' . $attributes['type'] . '_list_to">';
 		foreach ( $to_posts as $key => $to_post ) {
-			$return .= '<li><a href="' . esc_attr( $to_post->guid ) . '">' . esc_textarea( $to_post->post_title ) . '</li>';
+			$return .= '<li><a href="' . esc_attr( $to_post->guid ) . '">' . esc_textarea( $to_post->post_title ) . '</a></li>';
 		}
 		$return .= '</ul>';
 
