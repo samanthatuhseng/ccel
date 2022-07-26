@@ -19,6 +19,9 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 1.0.7
+- Fixed a bug in the p2p_connected_to shortcode which messed up the HTML
+
 ### 1.0.6
 - Update to block patterns and styling
 
