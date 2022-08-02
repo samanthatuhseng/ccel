@@ -1,9 +1,11 @@
 import './filter.scss';
 
-(function ($) {
-	// eslint-disable-next-line prettier/prettier
-	$( document ).ready( function() {
+import React from 'react';
+import ReactDOM from 'react-dom';
+import CCELFilter from './component-filter';
 
-	} );
+ReactDOM.render(
+	<CCELFilter />,
 	// eslint-disable-next-line no-undef
-})(jQuery);
+	document.getElementById('ccel-filter')
+);
