@@ -100,6 +100,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _includes_blocks_achieve_by_lesson_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../includes/blocks/achieve_by_lesson/block */ "./includes/blocks/achieve_by_lesson/block.js");
 /* harmony import */ var _includes_blocks_align_with_themes_block__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../includes/blocks/align_with_themes/block */ "./includes/blocks/align_with_themes/block.js");
 /* harmony import */ var _includes_blocks_related_lessons_block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../includes/blocks/related_lessons/block */ "./includes/blocks/related_lessons/block.js");
+/* harmony import */ var _includes_blocks_ccel_filter_block__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../includes/blocks/ccel_filter/block */ "./includes/blocks/ccel_filter/block.js");
+
 
 
 
@@ -309,6 +311,76 @@ const Edit = ({
       columnNumber: 3
     }
   });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Edit);
+
+/***/ }),
+
+/***/ "./includes/blocks/ccel_filter/block.js":
+/*!**********************************************!*\
+  !*** ./includes/blocks/ccel_filter/block.js ***!
+  \**********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./includes/blocks/ccel_filter/edit.js");
+/**
+ * BLOCK: CCEL filter block.
+ */
+// Import block dependencies and components.
+
+const {
+  __
+} = wp.i18n;
+const {
+  registerBlockType
+} = wp.blocks;
+registerBlockType('ccel/filter', {
+  title: __('CCEL Filter', 'ubc-ccel'),
+  description: __('CCEL filtering system on the frontpage.', 'ubc-ccel'),
+  icon: 'book',
+  keywords: [__('ccel', 'ubc-ccel'), __('filter', 'ubc-ccel')],
+  category: 'ccel',
+  edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
+  save: () => null
+});
+
+/***/ }),
+
+/***/ "./includes/blocks/ccel_filter/edit.js":
+/*!*********************************************!*\
+  !*** ./includes/blocks/ccel_filter/edit.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/ccel_filter/edit.js";
+
+/**
+ * BLOCK: CCEL Filter
+ */
+const Edit = () => {
+  const style = {
+    padding: '20px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e1e1e1'
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: style,
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 14,
+      columnNumber: 9
+    }
+  }, "CCEL Filtering System");
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Edit);

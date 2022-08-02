@@ -28,6 +28,7 @@ class CCEL_Block {
 		require_once UBC_CCEL_PLUGIN_DIR . 'includes/blocks/achieve_by_lesson/register.php';
 		require_once UBC_CCEL_PLUGIN_DIR . 'includes/blocks/align_with_themes/register.php';
 		require_once UBC_CCEL_PLUGIN_DIR . 'includes/blocks/related_lessons/register.php';
+		require_once UBC_CCEL_PLUGIN_DIR . 'includes/blocks/ccel_filter/register.php';
 	}
 
 	/**

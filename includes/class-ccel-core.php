@@ -19,42 +19,16 @@ class CCEL_Core {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_filter_assets' ) );
 		add_action( 'init', array( $this, 'register_post_type_and_taxonomies' ) );
 		add_action( 'p2p_init', array( $this, 'create_post_connection_types' ) );
 
 		// Because this is an indeterminate post type, the shortcode direction will always be 'from'
 		// and the p2p plugin did not provide a shortcode to list 'to' posts.
 		add_shortcode( 'p2p_connected_to', array( $this, 'p2p_connected_to' ) );
+
+		// shortcode to show the filtering system.
+		add_shortcode( 'ccel_filter', array( $this, 'render_filter' ) );
 	}
-
-	/**
-	 * Enqueue assets required for the filering system to the homepage.
-	 *
-	 * @since   1.0.0
-	 */
-	public function enqueue_filter_assets() {
-
-		if ( ! is_front_page() ) {
-			return;
-		}
-
-		wp_enqueue_script(
-			'ubc-ccel-filter-script',
-			UBC_CCEL_PLUGIN_URL . 'dist/filter.js',
-			array(),
-			filemtime( UBC_CCEL_PLUGIN_DIR . 'dist/filter.js' ),
-			true
-		);
-
-		wp_register_style(
-			'ubc-ccel-filter-styles',
-			UBC_CCEL_PLUGIN_URL . 'dist/filter.css',
-			array(),
-			filemtime( UBC_CCEL_PLUGIN_DIR . 'dist/filter.css' )
-		);
-		wp_enqueue_style( 'ubc-ccel-filter-styles' );
-	}//end enqueue_filter_assets()
 
 	/**
 	 * Register custom post types and custom taxonomies below.
@@ -333,6 +307,33 @@ class CCEL_Core {
 
 		return $return;
 	}//end p2p_connected_to()
+
+	/**
+	 * Render the content of the fitering system.
+	 *
+	 * @param array $attr attributes received as part of the shortcode.
+	 *
+	 * @return HTML HTML output.
+	 */
+	public function render_filter( $attr ) {
+		wp_enqueue_script(
+			'ubc-ccel-filter-script',
+			UBC_CCEL_PLUGIN_URL . 'dist/filter.js',
+			array(),
+			filemtime( UBC_CCEL_PLUGIN_DIR . 'dist/filter.js' ),
+			true
+		);
+
+		wp_register_style(
+			'ubc-ccel-filter-styles',
+			UBC_CCEL_PLUGIN_URL . 'dist/filter.css',
+			array(),
+			filemtime( UBC_CCEL_PLUGIN_DIR . 'dist/filter.css' )
+		);
+		wp_enqueue_style( 'ubc-ccel-filter-styles' );
+
+		return '<div id="ccel-filter"></div>';
+	}//end render_filter()
 
 }
 
