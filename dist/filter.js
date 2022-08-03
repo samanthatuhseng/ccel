@@ -95,9 +95,13 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
 /**
  * The Filter component.
  */
+
 /* harmony default export */ __webpack_exports__["default"] = (() => {
   console.log(ubc_ccel.api_endpoint); // Do Staff
 
