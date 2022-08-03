@@ -330,10 +330,9 @@ class CCEL_Core {
 			array(
 				'api_endpoint' => array(
 					'all_themes'                => '/wp-json/wp/v2/ccel_theme',
-					'all_lessons'               => '/wp-json/wp/v2/ccel_lesson',
 					'all_learning_outcomes'     => '/wp-json/wp/v2/ccel_lo',
-					'learning-outcomes-themes'  => '/wp-json/ccel/v1/aligned-learning-outcomes',
-					'learning-outcomes-lessons' => '/wp-json/ccel/v1/aligned-learning-outcomes',
+					'learning-outcomes-themes'  => '/wp-json/ccel/v1/learning-outcomes-themes',
+					'learning-outcomes-lessons' => '/wp-json/ccel/v1/learning-outcomes-lessons',
 				),
 			)
 		);
