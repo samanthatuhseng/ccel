@@ -21,6 +21,7 @@ Build JS and CSS for production
 
 ### 1.0.8
 - Improved accessibility for each template.
+- Defined custom rest api endpoint.
 
 ### 1.0.7
 - Fixed a bug in the p2p_connected_to shortcode which messed up the HTML
