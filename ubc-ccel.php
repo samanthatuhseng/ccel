@@ -32,6 +32,7 @@ function init() {
 	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-core.php';
 	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-block-pattern.php';
 	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-block.php';
+	require_once UBC_CCEL_PLUGIN_DIR . 'includes/class-ccel-api.php';
 
 }
 

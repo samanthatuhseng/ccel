@@ -99,7 +99,8 @@ __webpack_require__.r(__webpack_exports__);
  * The Filter component.
  */
 /* harmony default export */ __webpack_exports__["default"] = (() => {
-  // Do Staff
+  console.log(ubc_ccel.api_endpoint); // Do Staff
+
   return '';
 });
 
