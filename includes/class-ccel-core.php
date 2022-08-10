@@ -21,6 +21,9 @@ class CCEL_Core {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_post_type_and_taxonomies' ) );
 		add_action( 'p2p_init', array( $this, 'create_post_connection_types' ) );
+		add_filter( 'rest_prepare_ccel_theme', array( $this, 'fix_decode_rest_api' ), 10, 3 );
+		add_filter( 'rest_prepare_ccel_lo', array( $this, 'fix_decode_rest_api' ), 10, 3 );
+		add_filter( 'rest_prepare_ccel_ccel_lesson', array( $this, 'fix_decode_rest_api' ), 10, 3 );
 
 		// Because this is an indeterminate post type, the shortcode direction will always be 'from'
 		// and the p2p plugin did not provide a shortcode to list 'to' posts.
@@ -347,6 +350,26 @@ class CCEL_Core {
 
 		return '<div id="ccel-filter"></div>';
 	}//end render_filter()
+
+	/**
+	 * Response from rest api including URI decode. Need to fix it here.
+	 *
+	 * @param WP_REST_Response $response The response object.
+	 * @param WP_POST          $post Post object.
+	 * @param WP_REST_Request  $request Request object.
+	 *
+	 * @return HTML HTML output.
+	 */
+	public function fix_decode_rest_api( $response, $post, $request ) {
+		if ( ! isset( $post ) ) {
+			return $response;
+		}
+
+		$response->data['title']['rendered'] = html_entity_decode( $response->data['title']['rendered'] );
+		$response->data['guid']['rendered']  = html_entity_decode( $response->data['guid']['rendered'] );
+
+		return $response;
+	}
 
 }
 
