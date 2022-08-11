@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import './filter.scss';
 import { IconBook, IconFlag } from './icons';
-// import axios from 'axios';
+import { decodeEntities } from '@wordpress/html-entities';
 
 /**
  * The Filter component.
@@ -68,7 +68,7 @@ export default class HomePageFilter extends Component {
 					});
 					this.setState({
 						secondOptions: response,
-						text: 'that teaches the learning objective',
+						text: 'that achieves the learning outcome',
 					});
 				}
 			);
@@ -102,14 +102,15 @@ export default class HomePageFilter extends Component {
 		this.getData(
 			// eslint-disable-next-line
 			(this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
-				'/' +
-				this.state.secondSelected.value,
+			'/' +
+			this.state.secondSelected.value,
 			(response) => {
 				response = response.map((so) => {
+					console.log(so);
 					return {
 						value: so.ID,
-						label: so.post_title,
-						link: so.guid,
+						label: decodeEntities(so.post_title),
+						link: decodeEntities(so.guid),
 					};
 				});
 				this.setState({
@@ -149,6 +150,21 @@ export default class HomePageFilter extends Component {
 			placeholder: (provided) => ({
 				...provided,
 				color: '#FFFFFF',
+			}),
+
+			input: (provided) => ({
+				...provided,
+				color: '#FFFFFF',
+			}),
+
+			dropdownIndicator: (provided) => ({
+				...provided,
+				svg: {
+					fill: 'hsl(0deg 0% 80%)',
+				},
+				'svg:hover': {
+					fill: '#FFFFFF',
+				},
 			}),
 		};
 
@@ -193,7 +209,7 @@ export default class HomePageFilter extends Component {
 						return (
 							<li className="result-list-styling" key={r.value}>
 								{this.state.objectType ===
-								objectTypeOptions[0] ? (
+									objectTypeOptions[0] ? (
 									<IconFlag />
 								) : (
 									<IconBook />

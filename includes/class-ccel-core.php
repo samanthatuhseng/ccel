@@ -21,9 +21,6 @@ class CCEL_Core {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_post_type_and_taxonomies' ) );
 		add_action( 'p2p_init', array( $this, 'create_post_connection_types' ) );
-		add_filter( 'rest_prepare_ccel_theme', array( $this, 'fix_decode_rest_api' ), 10, 3 );
-		add_filter( 'rest_prepare_ccel_lo', array( $this, 'fix_decode_rest_api' ), 10, 3 );
-		add_filter( 'rest_prepare_ccel_ccel_lesson', array( $this, 'fix_decode_rest_api' ), 10, 3 );
 
 		// Because this is an indeterminate post type, the shortcode direction will always be 'from'
 		// and the p2p plugin did not provide a shortcode to list 'to' posts.
@@ -191,20 +188,27 @@ class CCEL_Core {
 
 		p2p_register_connection_type(
 			array(
-				'name'        => 'learning_outcome_prerequisites',
-				'from'        => 'ccel_lo',
-				'to'          => 'ccel_lo',
-				'title'       => array(
+				'name'            => 'learning_outcome_prerequisites',
+				'from'            => 'ccel_lo',
+				'to'              => 'ccel_lo',
+				'sortable'        => true,
+				'to_query_vars'   => array(
+					'order' => 'ASC',
+				),
+				'from_query_vars' => array(
+					'order' => 'ASC',
+				),
+				'title'           => array(
 					'from' => __( 'Prerequisites', 'ubc_ccel' ),
 					'to'   => __( 'Build Towards', 'ubc_ccel' ),
 				),
-				'from_labels' => array(
+				'from_labels'     => array(
 					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
 					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
 					'create'        => __( 'Add Learning Outcomes', 'ubc_ccel' ),
 				),
-				'to_labels'   => array(
+				'to_labels'       => array(
 					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
 					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
@@ -215,20 +219,27 @@ class CCEL_Core {
 
 		p2p_register_connection_type(
 			array(
-				'name'        => 'learning_outcome_lesson',
-				'from'        => 'ccel_lo',
-				'to'          => 'ccel_lesson',
-				'title'       => array(
+				'name'            => 'learning_outcome_lesson',
+				'from'            => 'ccel_lo',
+				'to'              => 'ccel_lesson',
+				'sortable'        => true,
+				'to_query_vars'   => array(
+					'order' => 'ASC',
+				),
+				'from_query_vars' => array(
+					'order' => 'ASC',
+				),
+				'title'           => array(
 					'from' => __( 'Achieved by lesson', 'ubc_ccel' ),
 					'to'   => __( 'Achieves learning outcome', 'ubc_ccel' ),
 				),
-				'to_labels'   => array(
+				'to_labels'       => array(
 					'singular_name' => __( 'Lesson', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Lesson', 'ubc_ccel' ),
 					'not_found'     => __( 'No Lesson found.', 'ubc_ccel' ),
 					'create'        => __( 'Add Lessons', 'ubc_ccel' ),
 				),
-				'from_labels' => array(
+				'from_labels'     => array(
 					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
 					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
@@ -239,20 +250,27 @@ class CCEL_Core {
 
 		p2p_register_connection_type(
 			array(
-				'name'        => 'learning_outcome_theme',
-				'from'        => 'ccel_lo',
-				'to'          => 'ccel_theme',
-				'title'       => array(
+				'name'            => 'learning_outcome_theme',
+				'from'            => 'ccel_lo',
+				'to'              => 'ccel_theme',
+				'sortable'        => true,
+				'to_query_vars'   => array(
+					'order' => 'ASC',
+				),
+				'from_query_vars' => array(
+					'order' => 'ASC',
+				),
+				'title'           => array(
 					'from' => __( 'Align with themes', 'ubc_ccel' ),
 					'to'   => __( 'Align learning outcomes', 'ubc_ccel' ),
 				),
-				'to_labels'   => array(
+				'to_labels'       => array(
 					'singular_name' => __( 'Theme', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Theme', 'ubc_ccel' ),
 					'not_found'     => __( 'No Theme found.', 'ubc_ccel' ),
 					'create'        => __( 'Add Themes', 'ubc_ccel' ),
 				),
-				'from_labels' => array(
+				'from_labels'     => array(
 					'singular_name' => __( 'Learning Outcome', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Learning Outcome', 'ubc_ccel' ),
 					'not_found'     => __( 'No Learning Outcome found.', 'ubc_ccel' ),
@@ -263,12 +281,19 @@ class CCEL_Core {
 
 		p2p_register_connection_type(
 			array(
-				'name'       => 'related_lessons',
-				'from'       => 'ccel_lesson',
-				'to'         => 'ccel_lesson',
-				'reciprocal' => true,
-				'title'      => __( 'Related Lessons', 'ubc_ccel' ),
-				'to_labels'  => array(
+				'name'            => 'related_lessons',
+				'from'            => 'ccel_lesson',
+				'to'              => 'ccel_lesson',
+				'sortable'        => true,
+				'to_query_vars'   => array(
+					'order' => 'ASC',
+				),
+				'from_query_vars' => array(
+					'order' => 'ASC',
+				),
+				'reciprocal'      => true,
+				'title'           => __( 'Related Lessons', 'ubc_ccel' ),
+				'to_labels'       => array(
 					'singular_name' => __( 'Lesson', 'ubc_ccel' ),
 					'search_items'  => __( 'Search Lesson', 'ubc_ccel' ),
 					'not_found'     => __( 'No Lesson found.', 'ubc_ccel' ),
@@ -350,26 +375,6 @@ class CCEL_Core {
 
 		return '<div id="ccel-filter"></div>';
 	}//end render_filter()
-
-	/**
-	 * Response from rest api including URI decode. Need to fix it here.
-	 *
-	 * @param WP_REST_Response $response The response object.
-	 * @param WP_POST          $post Post object.
-	 * @param WP_REST_Request  $request Request object.
-	 *
-	 * @return HTML HTML output.
-	 */
-	public function fix_decode_rest_api( $response, $post, $request ) {
-		if ( ! isset( $post ) ) {
-			return $response;
-		}
-
-		$response->data['title']['rendered'] = html_entity_decode( $response->data['title']['rendered'] );
-		$response->data['guid']['rendered']  = html_entity_decode( $response->data['guid']['rendered'] );
-
-		return $response;
-	}
 
 }
 

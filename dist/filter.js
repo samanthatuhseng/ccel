@@ -102,11 +102,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filter.scss */ "./assets/filter.scss");
 /* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_filter_scss__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons */ "./assets/icons.js");
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/html-entities */ "./node_modules/@wordpress/html-entities/build-module/index.js");
 var _jsxFileName = "/Users/samanthatseng/Local Sites/ccel/app/public/wp-content/plugins/ccel/assets/component-filter.js";
 
 
 
- // import axios from 'axios';
+
 
 /**
  * The Filter component.
@@ -136,7 +137,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   } // dispatching an action based on state change
 
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (prevState.objectType !== this.state.objectType) {
       this.setState({
         secondSelected: null,
@@ -180,7 +181,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         });
         this.setState({
           secondOptions: response,
-          text: 'that teaches the learning objective'
+          text: 'that achieves the learning outcome'
         });
       });
     }
@@ -214,8 +215,8 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         console.log(so);
         return {
           value: so.ID,
-          label: so.post_title,
-          link: so.guid
+          label: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__["decodeEntities"])(so.post_title),
+          link: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__["decodeEntities"])(so.guid)
         };
       });
       this.setState({
@@ -226,12 +227,12 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
   render() {
     const selectStyles = {
-      control: (provided, state) => ({ ...provided,
+      control: provided => ({ ...provided,
         boxShadow: 'none',
         border: 'none',
         backgroundColor: '#2F5D7C'
       }),
-      menu: (provided, state) => ({ ...provided,
+      menu: provided => ({ ...provided,
         border: 'none',
         boxShadow: 'none',
         backgroundColor: '#FFFFFF'
@@ -240,18 +241,29 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         backgroundColor: state.isFocused && '#2F5D7C',
         color: state.isFocused && '#FFFFFF'
       }),
-      singleValue: (provided, state) => ({ ...provided,
+      singleValue: provided => ({ ...provided,
         color: '#FFFFFF'
       }),
-      placeholder: (provided, state) => ({ ...provided,
+      placeholder: provided => ({ ...provided,
         color: '#FFFFFF'
+      }),
+      input: provided => ({ ...provided,
+        color: '#FFFFFF'
+      }),
+      dropdownIndicator: provided => ({ ...provided,
+        svg: {
+          fill: 'hsl(0deg 0% 80%)'
+        },
+        'svg:hover': {
+          fill: '#FFFFFF'
+        }
       })
     };
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 157,
+        lineNumber: 172,
         columnNumber: 4
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -259,7 +271,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 158,
+        lineNumber: 173,
         columnNumber: 5
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -267,7 +279,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 159,
+        lineNumber: 174,
         columnNumber: 6
       }
     }, "I am looking for a"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -275,7 +287,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 160,
+        lineNumber: 175,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -292,7 +304,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 161,
+        lineNumber: 176,
         columnNumber: 7
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -300,7 +312,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 174,
+        lineNumber: 189,
         columnNumber: 6
       }
     }, this.state.text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -308,7 +320,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 175,
+        lineNumber: 190,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -327,14 +339,14 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 176,
+        lineNumber: 191,
         columnNumber: 7
       }
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 192,
+        lineNumber: 207,
         columnNumber: 5
       }
     }, this.state.result.map(r => {
@@ -344,21 +356,21 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 195,
+          lineNumber: 210,
           columnNumber: 8
         }
       }, this.state.objectType === objectTypeOptions[0] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_3__["IconFlag"], {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 198,
+          lineNumber: 213,
           columnNumber: 10
         }
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_3__["IconBook"], {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 200,
+          lineNumber: 215,
           columnNumber: 10
         }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -366,7 +378,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 202,
+          lineNumber: 217,
           columnNumber: 9
         }
       }, r.label));
@@ -3161,6 +3173,78 @@ var weakMemoize = function weakMemoize(func) {
 
 /* harmony default export */ __webpack_exports__["default"] = (weakMemoize);
 
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/html-entities/build-module/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@wordpress/html-entities/build-module/index.js ***!
+  \*********************************************************************/
+/*! exports provided: decodeEntities */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "decodeEntities", function() { return decodeEntities; });
+/** @type {HTMLTextAreaElement} */
+let _decodeTextArea;
+/**
+ * Decodes the HTML entities from a given string.
+ *
+ * @param {string} html String that contain HTML entities.
+ *
+ * @example
+ * ```js
+ * const result = decodeEntities( '&aacute;' );
+ * console.log( result ); // result will be "á"
+ * ```
+ *
+ * @return {string} The decoded string.
+ */
+
+
+function decodeEntities(html) {
+  // Not a string, or no entities to decode.
+  if ('string' !== typeof html || -1 === html.indexOf('&')) {
+    return html;
+  } // Create a textarea for decoding entities, that we can reuse.
+
+
+  if (undefined === _decodeTextArea) {
+    if (document.implementation && document.implementation.createHTMLDocument) {
+      _decodeTextArea = document.implementation.createHTMLDocument('').createElement('textarea');
+    } else {
+      _decodeTextArea = document.createElement('textarea');
+    }
+  }
+
+  _decodeTextArea.innerHTML = html;
+  const decoded = _decodeTextArea.textContent;
+  _decodeTextArea.innerHTML = '';
+  /**
+   * Cast to string, HTMLTextAreaElement should always have `string` textContent.
+   *
+   * > The `textContent` property of the `Node` interface represents the text content of the
+   * > node and its descendants.
+   * >
+   * > Value: A string or `null`
+   * >
+   * > * If the node is a `document` or a Doctype, `textContent` returns `null`.
+   * > * If the node is a CDATA section, comment, processing instruction, or text node,
+   * >   textContent returns the text inside the node, i.e., the `Node.nodeValue`.
+   * > * For other node types, `textContent returns the concatenation of the textContent of
+   * >   every child node, excluding comments and processing instructions. (This is an empty
+   * >   string if the node has no children.)
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent
+   */
+
+  return (
+    /** @type {string} */
+    decoded
+  );
+}
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 

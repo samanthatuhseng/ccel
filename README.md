@@ -1,12 +1,6 @@
 # UBC CCEL
 New website project for the SIL curriculum.
 
-## Shortcodes
-- Objectives prerequisites: [p2p_connected type=learning_objective_prerequisites]
-- Objectives build towards: [p2p_connected_to type=learning_objective_prerequisites]
-- Objectives achieved by lessons: [p2p_connected type=learning_objective_lesson]
-- Objectives align with themes: [p2p_connected type=learning_objective_theme]
-
 ## Local Environment
 Install node packages
 `npm install`
@@ -18,6 +12,11 @@ Build JS and CSS for production
 `npm build`
 
 ## Change Log
+
+### 1.0.10
+- Remove references about 'Learning Objective'
+- Make connection list order to 'ASC'
+- Make connection list sortable by drag and drop
 
 ### 1.0.9
 - Defined custom rest api endpoint.
