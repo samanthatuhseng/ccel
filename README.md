@@ -15,6 +15,8 @@ Build JS and CSS for production
 
 ### 1.0.10
 - Remove references about 'Learning Objective'
+- Make connection list order to 'ASC'
+- Make connection list sortable by drag and drop
 
 ### 1.0.9
 - Defined custom rest api endpoint.
