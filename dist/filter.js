@@ -126,7 +126,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _component_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./component-filter */ "./assets/component-filter.js");
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/assets/filter.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/assets/filter.js";
 
 
 

@@ -152,7 +152,7 @@ registerBlockType('ccel/achieve-by-lessons', {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/achieve_by_lesson/edit.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/includes/blocks/achieve_by_lesson/edit.js";
 
 /**
  * BLOCK: CCEL Achieve by lessons
@@ -221,7 +221,7 @@ registerBlockType('ccel/align-with-themes', {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/align_with_themes/edit.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/includes/blocks/align_with_themes/edit.js";
 
 /**
  * BLOCK: CCEL Align with Themes
@@ -290,7 +290,7 @@ registerBlockType('ccel/build-towards', {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/build_towards/edit.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/includes/blocks/build_towards/edit.js";
 
 /**
  * BLOCK: CCEL Prerequisites
@@ -359,7 +359,7 @@ registerBlockType('ccel/filter', {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/ccel_filter/edit.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/includes/blocks/ccel_filter/edit.js";
 
 /**
  * BLOCK: CCEL Filter
@@ -429,7 +429,7 @@ registerBlockType('ccel/prerequisites', {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/prerequisites/edit.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/includes/blocks/prerequisites/edit.js";
 
 /**
  * BLOCK: CCEL Prerequisites
@@ -498,7 +498,7 @@ registerBlockType('ccel/related-lesson', {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ubc-ccel/includes/blocks/related_lessons/edit.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/includes/blocks/related_lessons/edit.js";
 
 /**
  * BLOCK: CCEL Related Lessons

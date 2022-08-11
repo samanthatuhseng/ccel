@@ -64,7 +64,8 @@ class CCEL_Api {
 	 * @return array a list of lessons.
 	 */
 	public function get_aligned_learning_outcomes( $data ) {
-		return p2p_type( 'learning_outcome_theme' )->get_connected( (int) $data['id'] )->posts;
+		$posts = p2p_type( 'learning_outcome_theme' )->get_connected( (int) $data['id'] )->posts;
+		return $this->retrieve_post_tags( $posts, 'ccel_lo_tag' );
 	}
 
 	/**
@@ -74,7 +75,26 @@ class CCEL_Api {
 	 * @return array a list of learning outcomes.
 	 */
 	public function get_lo_lessons( $data ) {
-		return p2p_type( 'learning_outcome_lesson' )->get_connected( (int) $data['id'] )->posts;
+		$posts = p2p_type( 'learning_outcome_lesson' )->get_connected( (int) $data['id'] )->posts;
+		return $this->retrieve_post_tags( $posts, 'ccel_lesson_tag' );
+	}
+
+	private function retrieve_post_tags( $posts, $tax_name ) {
+		return array_map(
+			function( $post ) use ( $tax_name ) {
+				$terms = get_the_terms( $post, $tax_name);
+
+				$post->tags = ! $terms ? array() : array_map(
+					function( $term ) {
+						return $term->name;
+					},
+					$terms
+				);
+
+				return $post;
+			},
+			$posts
+		);
 	}
 }
 
