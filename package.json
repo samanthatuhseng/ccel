@@ -36,6 +36,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wordpress/html-entities": "^3.15.0"
+    "@wordpress/html-entities": "^3.15.0",
+    "react-select": "^5.4.0"
   }
 }

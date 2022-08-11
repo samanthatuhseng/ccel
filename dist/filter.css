@@ -1,3 +1,38 @@
+.inline-select-dropdown {
+  padding-right: 10px;
+  padding-left: 10px;
+  font-weight: bold;
+}
 
+.overall-styling {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+  background-color: #F4F4F4;
+  padding: 1.5rem 2rem;
+  margin-bottom: 30px;
+}
+
+.text-lining {
+  padding-top: 7px;
+  font-size: 16px;
+}
+
+.dropdown-width {
+  width: 300px;
+}
+
+.result-list-styling {
+  list-style-type: none;
+  padding-bottom: 15px;
+  font-size: 16px;
+}
+
+.svg-icon {
+  width: 12px;
+  height: 12px;
+  padding-right: 7px;
+  fill: #002144;
+}
 
 /*# sourceMappingURL=filter.css.map*/
