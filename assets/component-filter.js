@@ -102,11 +102,10 @@ export default class HomePageFilter extends Component {
 		this.getData(
 			// eslint-disable-next-line
 			(this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
-			'/' +
-			this.state.secondSelected.value,
+				'/' +
+				this.state.secondSelected.value,
 			(response) => {
 				response = response.map((so) => {
-					console.log(so);
 					return {
 						value: so.ID,
 						label: decodeEntities(so.post_title),
@@ -209,7 +208,7 @@ export default class HomePageFilter extends Component {
 						return (
 							<li className="result-list-styling" key={r.value}>
 								{this.state.objectType ===
-									objectTypeOptions[0] ? (
+								objectTypeOptions[0] ? (
 									<IconFlag />
 								) : (
 									<IconBook />
