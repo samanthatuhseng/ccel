@@ -99,7 +99,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filter.scss */ "./assets/filter.scss");
+/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_filter_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons */ "./assets/icons.js");
 var _jsxFileName = "/Users/samanthatseng/Local Sites/ccel/app/public/wp-content/plugins/ccel/assets/component-filter.js";
+
+
 
  // import axios from 'axios';
 
@@ -127,11 +132,16 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       result: [],
       text: 'that aligns with the theme of'
     };
+    this.getSecondDropdownOptions();
   } // dispatching an action based on state change
 
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.objectType !== this.state.objectType) {
+      this.setState({
+        secondSelected: null,
+        result: []
+      });
       this.getSecondDropdownOptions();
     }
 
@@ -177,7 +187,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   getData(url, callback) {
-    fetch(url).then(res => res.json()).then(response => callback(response)); // .catch((error) => console.error(error));
+    fetch(url).then(res => res.json()).then(response => callback(response)); // .catch((error) => console.log(error));
   }
 
   onChangeObjectType(e) {
@@ -190,24 +200,22 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     this.setState({
       secondSelected: e
     });
-  } // Temporary solution to get actual links of result's list items.
-
-
-  replaceSpecialChar(string) {
-    return string.replace('#038;', '&');
   } // get the filtered results list based on selected first and second dropdown
 
 
   getFilteredList() {
-    const that = this;
+    if (!this.state.secondSelected) {
+      return;
+    }
+
     this.getData( // eslint-disable-next-line
-    (this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) + '/' + this.state.secondSelected.value, // this.state.secondURL.concat(this.state.secondSelected.value),
-    response => {
+    (this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) + '/' + this.state.secondSelected.value, response => {
       response = response.map(so => {
+        console.log(so);
         return {
           value: so.ID,
           label: so.post_title,
-          link: that.replaceSpecialChar(so.guid)
+          link: so.guid
         };
       });
       this.setState({
@@ -217,38 +225,57 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   render() {
+    const selectStyles = {
+      control: (provided, state) => ({ ...provided,
+        boxShadow: 'none',
+        border: 'none',
+        backgroundColor: '#2F5D7C'
+      }),
+      menu: (provided, state) => ({ ...provided,
+        border: 'none',
+        boxShadow: 'none',
+        backgroundColor: '#FFFFFF'
+      }),
+      option: (provided, state) => ({ ...provided,
+        backgroundColor: state.isFocused && '#2F5D7C',
+        color: state.isFocused && '#FFFFFF'
+      }),
+      singleValue: (provided, state) => ({ ...provided,
+        color: '#FFFFFF'
+      }),
+      placeholder: (provided, state) => ({ ...provided,
+        color: '#FFFFFF'
+      })
+    };
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 124,
+        lineNumber: 157,
         columnNumber: 4
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        display: 'flex'
-      },
+      className: "overall-styling",
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 125,
+        lineNumber: 158,
         columnNumber: 5
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "text-lining",
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 126,
+        lineNumber: 159,
         columnNumber: 6
       }
     }, "I am looking for a"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        padding: '0px 20px 0px 20px'
-      },
+      className: "inline-select-dropdown",
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 127,
+        lineNumber: 160,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -256,33 +283,36 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       placeholder: "Select Object Type",
       value: this.state.objectType,
       clearable: this.state.clearable,
-      searchable: this.state.searchable,
       onChange: this.onChangeObjectType,
       options: objectTypeOptions,
+      components: {
+        IndicatorSeparator: () => null
+      },
+      styles: selectStyles,
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 128,
+        lineNumber: 161,
         columnNumber: 7
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "text-lining",
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 138,
+        lineNumber: 174,
         columnNumber: 6
       }
     }, this.state.text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        padding: '0px 20px 0px 20px'
-      },
+      className: "inline-select-dropdown",
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 139,
+        lineNumber: 175,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      className: "dropdown-width",
       required: true,
       placeholder: "Select...",
       value: this.state.secondSelected,
@@ -290,34 +320,53 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       searchable: this.state.searchable,
       onChange: this.onChangeSecondSelected,
       options: this.state.secondOptions,
+      components: {
+        IndicatorSeparator: () => null
+      },
+      styles: selectStyles,
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 140,
+        lineNumber: 176,
         columnNumber: 7
       }
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 151,
+        lineNumber: 192,
         columnNumber: 5
       }
     }, this.state.result.map(r => {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "result-list-styling",
         key: r.value,
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 154,
+          lineNumber: 195,
           columnNumber: 8
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, this.state.objectType === objectTypeOptions[0] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_3__["IconFlag"], {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 198,
+          columnNumber: 10
+        }
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_3__["IconBook"], {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 200,
+          columnNumber: 10
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: r.link,
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 155,
+          lineNumber: 202,
           columnNumber: 9
         }
       }, r.label));
@@ -369,6 +418,66 @@ document.getElementById('ccel-filter'));
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./assets/icons.js":
+/*!*************************!*\
+  !*** ./assets/icons.js ***!
+  \*************************/
+/*! exports provided: IconBook, IconFlag */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IconBook", function() { return IconBook; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IconFlag", function() { return IconFlag; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _jsxFileName = "/Users/samanthatseng/Local Sites/ccel/app/public/wp-content/plugins/ccel/assets/icons.js";
+
+const IconBook = () => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    className: "svg-icon icon-book",
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 448 512",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 5,
+      columnNumber: 3
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    d: "M448 336v-288C448 21.49 426.5 0 400 0H96C42.98 0 0 42.98 0 96v320c0 53.02 42.98 96 96 96h320c17.67 0 32-14.33 32-31.1c0-11.72-6.607-21.52-16-27.1v-81.36C441.8 362.8 448 350.2 448 336zM143.1 128h192C344.8 128 352 135.2 352 144C352 152.8 344.8 160 336 160H143.1C135.2 160 128 152.8 128 144C128 135.2 135.2 128 143.1 128zM143.1 192h192C344.8 192 352 199.2 352 208C352 216.8 344.8 224 336 224H143.1C135.2 224 128 216.8 128 208C128 199.2 135.2 192 143.1 192zM384 448H96c-17.67 0-32-14.33-32-32c0-17.67 14.33-32 32-32h288V448z",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 10,
+      columnNumber: 4
+    }
+  }));
+};
+const IconFlag = () => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    className: "svg-icon icon-flag",
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 512 512",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 17,
+      columnNumber: 3
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    d: "M64 496C64 504.8 56.75 512 48 512h-32C7.25 512 0 504.8 0 496V32c0-17.75 14.25-32 32-32s32 14.25 32 32V496zM476.3 0c-6.365 0-13.01 1.35-19.34 4.233c-45.69 20.86-79.56 27.94-107.8 27.94c-59.96 0-94.81-31.86-163.9-31.87C160.9 .3055 131.6 4.867 96 15.75v350.5c32-9.984 59.87-14.1 84.85-14.1c73.63 0 124.9 31.78 198.6 31.78c31.91 0 68.02-5.971 111.1-23.09C504.1 355.9 512 344.4 512 332.1V30.73C512 11.1 495.3 0 476.3 0z",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 22,
+      columnNumber: 4
+    }
+  }));
+};
 
 /***/ }),
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import './filter.scss';
+import { IconBook, IconFlag } from './icons';
 // import axios from 'axios';
 
 /**
@@ -26,11 +28,13 @@ export default class HomePageFilter extends Component {
 			result: [],
 			text: 'that aligns with the theme of',
 		};
+		this.getSecondDropdownOptions();
 	}
 
 	// dispatching an action based on state change
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(_prevProps, prevState) {
 		if (prevState.objectType !== this.state.objectType) {
+			this.setState({ secondSelected: null, result: [] });
 			this.getSecondDropdownOptions();
 		}
 
@@ -90,17 +94,14 @@ export default class HomePageFilter extends Component {
 		});
 	}
 
-	// Temporary solution to get actual links of result's list items.
-	replaceSpecialChar(string) {
-		return string.replace('#038;', '&');
-	}
-
 	// get the filtered results list based on selected first and second dropdown
 	getFilteredList() {
-		const that = this;
+		if (!this.state.secondSelected) {
+			return;
+		}
 		this.getData(
 			// eslint-disable-next-line
-			(this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes']: ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
+			(this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
 				'/' +
 				this.state.secondSelected.value,
 			(response) => {
@@ -108,7 +109,7 @@ export default class HomePageFilter extends Component {
 					return {
 						value: so.ID,
 						label: so.post_title,
-						link: that.replaceSpecialChar(so.guid),
+						link: so.guid,
 					};
 				});
 				this.setState({
@@ -119,24 +120,60 @@ export default class HomePageFilter extends Component {
 	}
 
 	render() {
+		const selectStyles = {
+			control: (provided) => ({
+				...provided,
+				boxShadow: 'none',
+				border: 'none',
+				backgroundColor: '#2F5D7C',
+			}),
+
+			menu: (provided) => ({
+				...provided,
+				border: 'none',
+				boxShadow: 'none',
+				backgroundColor: '#FFFFFF',
+			}),
+
+			option: (provided, state) => ({
+				...provided,
+				backgroundColor: state.isFocused && '#2F5D7C',
+				color: state.isFocused && '#FFFFFF',
+			}),
+
+			singleValue: (provided) => ({
+				...provided,
+				color: '#FFFFFF',
+			}),
+
+			placeholder: (provided) => ({
+				...provided,
+				color: '#FFFFFF',
+			}),
+		};
+
 		return (
 			<div>
-				<div style={{ display: 'flex' }}>
-					<p>I am looking for a</p>
-					<div style={{ padding: '0px 20px 0px 20px' }}>
+				<div className="overall-styling">
+					<span className="text-lining">I am looking for a</span>
+					<div className="inline-select-dropdown">
 						<Select
 							required
 							placeholder="Select Object Type"
 							value={this.state.objectType}
 							clearable={this.state.clearable}
-							searchable={this.state.searchable}
 							onChange={this.onChangeObjectType}
 							options={objectTypeOptions}
+							components={{
+								IndicatorSeparator: () => null,
+							}}
+							styles={selectStyles}
 						></Select>
 					</div>
-					<span>{this.state.text}</span>
-					<div style={{ padding: '0px 20px 0px 20px' }}>
+					<span className="text-lining">{this.state.text}</span>
+					<div className="inline-select-dropdown">
 						<Select
+							className="dropdown-width"
 							required
 							placeholder="Select..."
 							value={this.state.secondSelected}
@@ -144,13 +181,23 @@ export default class HomePageFilter extends Component {
 							searchable={this.state.searchable}
 							onChange={this.onChangeSecondSelected}
 							options={this.state.secondOptions}
+							components={{
+								IndicatorSeparator: () => null,
+							}}
+							styles={selectStyles}
 						></Select>
 					</div>
 				</div>
 				<div>
 					{this.state.result.map((r) => {
 						return (
-							<li key={r.value}>
+							<li className="result-list-styling" key={r.value}>
+								{this.state.objectType ===
+								objectTypeOptions[0] ? (
+									<IconFlag />
+								) : (
+									<IconBook />
+								)}
 								<a href={r.link}>{r.label}</a>
 							</li>
 						);
