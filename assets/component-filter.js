@@ -44,42 +44,30 @@ export default class HomePageFilter extends Component {
 	}
 
 	getSecondDropdownOptions() {
-		// if selected value of the first dropdown is Learning Outcome then get Theme options for second dropdown
-		if (this.state.objectType === objectTypeOptions[0]) {
-			// eslint-disable-next-line
-			this.getData(ubc_ccel.api_endpoint.all_themes, (response) => {
-				response = response.map((theme) => {
-					return { value: theme.id, label: theme.title.rendered };
-				});
-				this.setState({
-					secondOptions: response,
-					text: 'that aligns with the theme of',
-				});
+		// eslint-disable-next-line camelcase, prettier/prettier, no-undef
+		const requestURL = this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
+		// eslint-disable-next-line prettier/prettier
+		const text = this.state.objectType === objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome';
+
+		// eslint-disable-next-line
+		this.getData(requestURL, (response) => {
+			response = response.map((theme) => {
+				return {
+					value: theme.id,
+					label: decodeEntities(theme.title.rendered),
+				};
 			});
-		}
-		// if selected value of the first dropdown is Lesson then get Learning Outcome options for second dropdown
-		if (this.state.objectType === objectTypeOptions[1]) {
-			this.getData(
-				// eslint-disable-next-line
-				ubc_ccel.api_endpoint.all_learning_outcomes,
-				(response) => {
-					response = response.map((lo) => {
-						return { value: lo.id, label: lo.title.rendered };
-					});
-					this.setState({
-						secondOptions: response,
-						text: 'that achieves the learning outcome',
-					});
-				}
-			);
-		}
+			this.setState({
+				secondOptions: response,
+				text,
+			});
+		});
 	}
 
 	getData(url, callback) {
 		fetch(url)
 			.then((res) => res.json())
 			.then((response) => callback(response));
-		// .catch((error) => console.log(error));
 	}
 
 	onChangeObjectType(e) {
