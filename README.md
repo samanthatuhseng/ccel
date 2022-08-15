@@ -13,6 +13,9 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 2.0.0
+- Add frontend UI
+
 ### 1.0.10
 - Remove references about 'Learning Objective'
 - Make connection list order to 'ASC'
