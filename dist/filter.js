@@ -107,7 +107,7 @@ var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plug
 
 
 const objectTypeOptions = [{
-  value: 'learning outcome',
+  value: 'learning_outcome',
   label: 'Learning Outcome'
 }, {
   value: 'lesson',
@@ -116,10 +116,30 @@ const objectTypeOptions = [{
 class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor(props) {
     super(props);
+    this.onObjectTypeChange = this.onObjectTypeChange.bind(this);
+    this.onSecondDropdownChange = this.onSecondDropdownChange.bind(this);
     this.state = {
       content: [],
-      objectType: objectTypeOptions[0]
+      objectType: objectTypeOptions[0],
+      secondDropdown: null
     };
+    this.searchParams = new URLSearchParams(window.location.search);
+    this.loading = true;
+  }
+
+  componentDidMount() {
+    if (this.searchParams.has('object_type')) {
+      this.setState({
+        objectType: objectTypeOptions.filter(option => {
+          return option.value === this.searchParams.get('object_type');
+        })[0]
+      });
+    } else {
+      this.setState({
+        objectType: objectTypeOptions[0]
+      });
+      this.loading = false;
+    }
   } // get the filtered results list based on selected first and second dropdown
 
 
@@ -143,28 +163,59 @@ class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     fetch(url).then(res => res.json()).then(response => callback(response));
   }
 
+  onObjectTypeChange(newSelected) {
+    if (newSelected === this.state.objectType) {
+      return;
+    }
+
+    this.setState({
+      objectType: newSelected,
+      secondDropdown: null,
+      content: []
+    });
+    this.searchParams.set('object_type', newSelected.value);
+    this.searchParams.delete('second_dropdown');
+    window.history.pushState(newSelected, '', window.location.pathname + '?' + this.searchParams.toString());
+  }
+
+  onSecondDropdownChange(newSelected) {
+    if (newSelected === this.state.secondDropdown) {
+      return;
+    }
+
+    this.setState({
+      secondDropdown: newSelected,
+      content: []
+    });
+
+    if (newSelected) {
+      this.getFilteredList((this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) + '/' + newSelected.value);
+      this.searchParams.set('second_dropdown', newSelected.value);
+      window.history.pushState(newSelected, '', window.location.pathname + '?' + this.searchParams.toString());
+    }
+  }
+
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 47,
+        lineNumber: 118,
         columnNumber: 4
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_1__["default"], {
       objectType: this.state.objectType,
       objectTypeOptions: objectTypeOptions,
-      setObjectType: value => {
-        this.setState({
-          objectType: value
-        });
-      },
+      setObjectType: this.onObjectTypeChange,
+      secondDropdown: this.state.secondDropdown,
+      setSecondDropdown: this.onSecondDropdownChange,
       getData: this.getData.bind(this),
-      getFilteredList: this.getFilteredList.bind(this),
+      searchParams: this.searchParams,
+      isLoading: this.loading,
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 48,
+        lineNumber: 119,
         columnNumber: 5
       }
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_list__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -174,7 +225,7 @@ class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 59,
+        lineNumber: 129,
         columnNumber: 5
       }
     }));
@@ -209,25 +260,34 @@ var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plug
 class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor(props) {
     super(props);
-    this.onChangeObjectType = this.onChangeObjectType.bind(this);
-    this.onChangeSecondSelected = this.onChangeSecondSelected.bind(this); //set the initial state of the component by assigning an object to this.state
+    this.onChangeObjectType = this.onChangeObjectType.bind(this); //set the initial state of the component by assigning an object to this.state
 
     this.state = {
-      secondSelected: '',
       secondOptions: [],
       text: 'that aligns with the theme of'
     };
   }
 
   componentDidMount() {
-    this.onChangeObjectType(this.props.objectTypeOptions[0]);
+    this.onChangeObjectType();
   }
 
-  onChangeObjectType(newObjectType) {
-    // eslint-disable-next-line camelcase, prettier/prettier, no-undef
-    const requestURL = newObjectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes; // eslint-disable-next-line prettier/prettier
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.objectType !== prevProps.objectType) {
+      const text = this.props.objectType === this.props.objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome';
+      this.setState({
+        text
+      });
+      this.onChangeObjectType(this.props.objectType);
+      this.props.setSecondDropdown(null);
+    }
+  }
 
-    const text = newObjectType === this.props.objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome'; // eslint-disable-next-line
+  onChangeObjectType(e) {
+    // eslint-disable-next-line camelcase, prettier/prettier, no-undef
+    const requestURL = this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes; // eslint-disable-next-line prettier/prettier
+    // eslint-disable-next-line
 
     this.props.getData(requestURL, response => {
       response = response.map(theme => {
@@ -236,23 +296,16 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           label: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__["decodeEntities"])(theme.title.rendered)
         };
       });
-      this.props.setObjectType(newObjectType);
       this.setState({
-        secondOptions: response,
-        text,
-        secondSelected: null
+        secondOptions: response
       });
-    });
-  }
 
-  onChangeSecondSelected(newSecondDropdownValue) {
-    this.setState({
-      secondSelected: newSecondDropdownValue
+      if (this.props.searchParams.has('second_dropdown') && this.props.isLoading && !isNaN(this.props.searchParams.get('second_dropdown'))) {
+        this.props.setSecondDropdown(response.filter(option => {
+          return option.value === parseInt(this.props.searchParams.get('second_dropdown'));
+        })[0]);
+      }
     });
-
-    if (newSecondDropdownValue) {
-      this.props.getFilteredList((this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) + '/' + newSecondDropdownValue.value);
-    }
   }
 
   render() {
@@ -293,7 +346,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 118,
+        lineNumber: 128,
         columnNumber: 4
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -301,7 +354,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 119,
+        lineNumber: 129,
         columnNumber: 5
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -309,7 +362,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 120,
+        lineNumber: 130,
         columnNumber: 6
       }
     }, "I am looking for a"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -317,7 +370,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 121,
+        lineNumber: 131,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -325,7 +378,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       placeholder: "Select Object Type",
       value: this.props.objectType,
       clearable: this.state.clearable,
-      onChange: this.onChangeObjectType,
+      onChange: this.props.setObjectType,
       options: this.props.objectTypeOptions,
       components: {
         IndicatorSeparator: () => null
@@ -334,7 +387,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 122,
+        lineNumber: 132,
         columnNumber: 7
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -342,7 +395,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 135,
+        lineNumber: 145,
         columnNumber: 6
       }
     }, this.state.text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -350,17 +403,19 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 136,
+        lineNumber: 146,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
       className: "dropdown-width",
       required: true,
       placeholder: "Select...",
-      value: this.state.secondSelected,
+      value: this.props.secondDropdown,
       clearable: this.state.clearable,
       searchable: this.state.searchable,
-      onChange: this.onChangeSecondSelected,
+      onChange: e => {
+        this.props.setSecondDropdown(e);
+      },
       options: this.state.secondOptions,
       components: {
         IndicatorSeparator: () => null
@@ -369,7 +424,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 137,
+        lineNumber: 147,
         columnNumber: 7
       }
     }))));

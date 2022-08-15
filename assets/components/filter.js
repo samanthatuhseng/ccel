@@ -11,25 +11,38 @@ export default class Filter extends Component {
 		super(props);
 
 		this.onChangeObjectType = this.onChangeObjectType.bind(this);
-		this.onChangeSecondSelected = this.onChangeSecondSelected.bind(this);
 
 		//set the initial state of the component by assigning an object to this.state
 		this.state = {
-			secondSelected: '',
 			secondOptions: [],
 			text: 'that aligns with the theme of',
 		};
 	}
 
 	componentDidMount() {
-		this.onChangeObjectType(this.props.objectTypeOptions[0]);
+		this.onChangeObjectType();
 	}
 
-	onChangeObjectType(newObjectType) {
+	componentDidUpdate(prevProps) {
+		// Typical usage (don't forget to compare props):
+		if (this.props.objectType !== prevProps.objectType) {
+			const text =
+				this.props.objectType === this.props.objectTypeOptions[0]
+					? 'that aligns with the theme of'
+					: 'that achieves the learning outcome';
+			this.setState({
+				text,
+			});
+
+			this.onChangeObjectType(this.props.objectType);
+			this.props.setSecondDropdown(null);
+		}
+	}
+
+	onChangeObjectType(e) {
 		// eslint-disable-next-line camelcase, prettier/prettier, no-undef
-		const requestURL = newObjectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
+		const requestURL = this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
 		// eslint-disable-next-line prettier/prettier
-		const text = newObjectType === this.props.objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome';
 
 		// eslint-disable-next-line
 		this.props.getData(requestURL, (response) => {
@@ -40,30 +53,27 @@ export default class Filter extends Component {
 				};
 			});
 
-			this.props.setObjectType(newObjectType);
-
 			this.setState({
 				secondOptions: response,
-				text,
-				secondSelected: null,
 			});
-		});
-	}
 
-	onChangeSecondSelected(newSecondDropdownValue) {
-		this.setState({
-			secondSelected: newSecondDropdownValue,
+			if (
+				this.props.searchParams.has('second_dropdown') &&
+				this.props.isLoading &&
+				!isNaN(this.props.searchParams.get('second_dropdown'))
+			) {
+				this.props.setSecondDropdown(
+					response.filter((option) => {
+						return (
+							option.value ===
+							parseInt(
+								this.props.searchParams.get('second_dropdown')
+							)
+						);
+					})[0]
+				);
+			}
 		});
-
-		if (newSecondDropdownValue) {
-			this.props.getFilteredList(
-				(this.props.objectType === this.props.objectTypeOptions[0]
-					? ubc_ccel.api_endpoint['learning-outcomes-themes']
-					: ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
-					'/' +
-					newSecondDropdownValue.value
-			);
-		}
 	}
 
 	render() {
@@ -124,7 +134,7 @@ export default class Filter extends Component {
 							placeholder="Select Object Type"
 							value={this.props.objectType}
 							clearable={this.state.clearable}
-							onChange={this.onChangeObjectType}
+							onChange={this.props.setObjectType}
 							options={this.props.objectTypeOptions}
 							components={{
 								IndicatorSeparator: () => null,
@@ -138,10 +148,12 @@ export default class Filter extends Component {
 							className="dropdown-width"
 							required
 							placeholder="Select..."
-							value={this.state.secondSelected}
+							value={this.props.secondDropdown}
 							clearable={this.state.clearable}
 							searchable={this.state.searchable}
-							onChange={this.onChangeSecondSelected}
+							onChange={(e) => {
+								this.props.setSecondDropdown(e);
+							}}
 							options={this.state.secondOptions}
 							components={{
 								IndicatorSeparator: () => null,
