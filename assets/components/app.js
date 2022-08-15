@@ -38,6 +38,14 @@ export default class CCELFilter extends Component {
 			this.setState({
 				objectType: objectTypeOptions[0],
 			});
+
+			this.searchParams.set('object_type', objectTypeOptions[0].value);
+			this.searchParams.delete('second_dropdown');
+			window.history.pushState(
+				objectTypeOptions[0],
+				'',
+				window.location.pathname + '?' + this.searchParams.toString()
+			);
 			this.loading = false;
 		}
 	}
@@ -126,6 +134,9 @@ export default class CCELFilter extends Component {
 					getData={this.getData.bind(this)}
 					searchParams={this.searchParams}
 					isLoading={this.loading}
+					disableLoading={() => {
+						this.loading = false;
+					}}
 				/>
 				<List
 					content={this.state.content}

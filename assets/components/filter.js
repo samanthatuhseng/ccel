@@ -24,7 +24,6 @@ export default class Filter extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
 		if (this.props.objectType !== prevProps.objectType) {
 			const text =
 				this.props.objectType === this.props.objectTypeOptions[0]
@@ -72,6 +71,7 @@ export default class Filter extends Component {
 						);
 					})[0]
 				);
+				this.props.disableLoading();
 			}
 		});
 	}
