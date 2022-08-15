@@ -362,6 +362,7 @@ class CCEL_Core {
 					'learning-outcomes-themes'  => '/wp-json/ccel/v1/learning-outcomes-themes',
 					'learning-outcomes-lessons' => '/wp-json/ccel/v1/learning-outcomes-lessons',
 				),
+				'site_url'     => get_site_url(),
 			)
 		);
 

@@ -2,7 +2,7 @@ import './filter.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CCELFilter from './component-filter';
+import CCELFilter from './components/app';
 
 ReactDOM.render(
 	<CCELFilter />,

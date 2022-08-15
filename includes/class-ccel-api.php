@@ -79,10 +79,18 @@ class CCEL_Api {
 		return $this->retrieve_post_tags( $posts, 'ccel_lesson_tag' );
 	}
 
+	/**
+	 * Get tags for a post.
+	 *
+	 * @param WP_POST $posts post object.
+	 * @param String  $tax_name taxonomy name.
+	 *
+	 * @return WP_POST modified post object.
+	 */
 	private function retrieve_post_tags( $posts, $tax_name ) {
 		return array_map(
 			function( $post ) use ( $tax_name ) {
-				$terms = get_the_terms( $post, $tax_name);
+				$terms = get_the_terms( $post->ID, $tax_name );
 
 				$post->tags = ! $terms ? array() : array_map(
 					function( $term ) {

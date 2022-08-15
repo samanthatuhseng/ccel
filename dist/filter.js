@@ -86,32 +86,25 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./assets/component-filter.js":
-/*!************************************!*\
-  !*** ./assets/component-filter.js ***!
-  \************************************/
+/***/ "./assets/components/app.js":
+/*!**********************************!*\
+  !*** ./assets/components/app.js ***!
+  \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HomePageFilter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CCELFilter; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
-/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filter.scss */ "./assets/filter.scss");
-/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_filter_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons */ "./assets/icons.js");
-/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/html-entities */ "./node_modules/@wordpress/html-entities/build-module/index.js");
-var _jsxFileName = "/Users/samanthatseng/Local Sites/ccel/app/public/wp-content/plugins/ccel/assets/component-filter.js";
+/* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filter */ "./assets/components/filter.js");
+/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./list */ "./assets/components/list.js");
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/html-entities */ "./node_modules/@wordpress/html-entities/build-module/index.js");
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/assets/components/app.js";
 
 
 
-
-
-/**
- * The Filter component.
- */
 
 const objectTypeOptions = [{
   value: 'learning outcome',
@@ -120,109 +113,146 @@ const objectTypeOptions = [{
   value: 'lesson',
   label: 'Lesson'
 }];
-class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: [],
+      objectType: objectTypeOptions[0]
+    };
+  } // get the filtered results list based on selected first and second dropdown
+
+
+  getFilteredList(url) {
+    this.getData(url, response => {
+      response = response.map(so => {
+        return {
+          value: so.ID,
+          label: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_3__["decodeEntities"])(so.post_title),
+          link: ubc_ccel.site_url + '?p=' + so.ID,
+          tags: so.tags
+        };
+      });
+      this.setState({
+        content: response
+      });
+    });
+  }
+
+  getData(url, callback) {
+    fetch(url).then(res => res.json()).then(response => callback(response));
+  }
+
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 47,
+        columnNumber: 4
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      objectType: this.state.objectType,
+      objectTypeOptions: objectTypeOptions,
+      setObjectType: value => {
+        this.setState({
+          objectType: value
+        });
+      },
+      getData: this.getData.bind(this),
+      getFilteredList: this.getFilteredList.bind(this),
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 48,
+        columnNumber: 5
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_list__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      content: this.state.content,
+      objectType: this.state.objectType,
+      objectTypeOptions: objectTypeOptions,
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 59,
+        columnNumber: 5
+      }
+    }));
+  }
+
+}
+
+/***/ }),
+
+/***/ "./assets/components/filter.js":
+/*!*************************************!*\
+  !*** ./assets/components/filter.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Filter; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/html-entities */ "./node_modules/@wordpress/html-entities/build-module/index.js");
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/assets/components/filter.js";
+
+
+
+/**
+ * The Filter component.
+ */
+
+class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor(props) {
     super(props);
     this.onChangeObjectType = this.onChangeObjectType.bind(this);
     this.onChangeSecondSelected = this.onChangeSecondSelected.bind(this); //set the initial state of the component by assigning an object to this.state
 
     this.state = {
-      objectType: objectTypeOptions[0],
       secondSelected: '',
       secondOptions: [],
-      result: [],
       text: 'that aligns with the theme of'
     };
-    this.getSecondDropdownOptions();
-  } // dispatching an action based on state change
-
-
-  componentDidUpdate(_prevProps, prevState) {
-    if (prevState.objectType !== this.state.objectType) {
-      this.setState({
-        secondSelected: null,
-        result: []
-      });
-      this.getSecondDropdownOptions();
-    }
-
-    if (prevState.secondSelected !== this.state.secondSelected) {
-      this.getFilteredList();
-    }
   }
 
-  getSecondDropdownOptions() {
-    // if selected value of the first dropdown is Learning Outcome then get Theme options for second dropdown
-    if (this.state.objectType === objectTypeOptions[0]) {
-      // eslint-disable-next-line
-      this.getData(ubc_ccel.api_endpoint.all_themes, response => {
-        response = response.map(theme => {
-          return {
-            value: theme.id,
-            label: theme.title.rendered
-          };
-        });
-        this.setState({
-          secondOptions: response,
-          text: 'that aligns with the theme of'
-        });
-      });
-    } // if selected value of the first dropdown is Lesson then get Learning Outcome options for second dropdown
-
-
-    if (this.state.objectType === objectTypeOptions[1]) {
-      this.getData( // eslint-disable-next-line
-      ubc_ccel.api_endpoint.all_learning_outcomes, response => {
-        response = response.map(lo => {
-          return {
-            value: lo.id,
-            label: lo.title.rendered
-          };
-        });
-        this.setState({
-          secondOptions: response,
-          text: 'that achieves the learning outcome'
-        });
-      });
-    }
+  componentDidMount() {
+    this.onChangeObjectType(this.props.objectTypeOptions[0]);
   }
 
-  getData(url, callback) {
-    fetch(url).then(res => res.json()).then(response => callback(response)); // .catch((error) => console.log(error));
-  }
+  onChangeObjectType(newObjectType) {
+    // eslint-disable-next-line camelcase, prettier/prettier, no-undef
+    const requestURL = newObjectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes; // eslint-disable-next-line prettier/prettier
 
-  onChangeObjectType(e) {
-    this.setState({
-      objectType: e
-    });
-  }
+    const text = newObjectType === this.props.objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome'; // eslint-disable-next-line
 
-  onChangeSecondSelected(e) {
-    this.setState({
-      secondSelected: e
-    });
-  } // get the filtered results list based on selected first and second dropdown
-
-
-  getFilteredList() {
-    if (!this.state.secondSelected) {
-      return;
-    }
-
-    this.getData( // eslint-disable-next-line
-    (this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) + '/' + this.state.secondSelected.value, response => {
-      response = response.map(so => {
-        console.log(so);
+    this.props.getData(requestURL, response => {
+      response = response.map(theme => {
         return {
-          value: so.ID,
-          label: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__["decodeEntities"])(so.post_title),
-          link: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_4__["decodeEntities"])(so.guid)
+          value: theme.id,
+          label: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__["decodeEntities"])(theme.title.rendered)
         };
       });
+      this.props.setObjectType(newObjectType);
       this.setState({
-        result: response
+        secondOptions: response,
+        text,
+        secondSelected: null
       });
     });
+  }
+
+  onChangeSecondSelected(newSecondDropdownValue) {
+    this.setState({
+      secondSelected: newSecondDropdownValue
+    });
+
+    if (newSecondDropdownValue) {
+      this.props.getFilteredList((this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) + '/' + newSecondDropdownValue.value);
+    }
   }
 
   render() {
@@ -263,7 +293,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 172,
+        lineNumber: 118,
         columnNumber: 4
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -271,7 +301,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 173,
+        lineNumber: 119,
         columnNumber: 5
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -279,7 +309,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 174,
+        lineNumber: 120,
         columnNumber: 6
       }
     }, "I am looking for a"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -287,16 +317,16 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 175,
+        lineNumber: 121,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
       required: true,
       placeholder: "Select Object Type",
-      value: this.state.objectType,
+      value: this.props.objectType,
       clearable: this.state.clearable,
       onChange: this.onChangeObjectType,
-      options: objectTypeOptions,
+      options: this.props.objectTypeOptions,
       components: {
         IndicatorSeparator: () => null
       },
@@ -304,7 +334,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 176,
+        lineNumber: 122,
         columnNumber: 7
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -312,7 +342,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 189,
+        lineNumber: 135,
         columnNumber: 6
       }
     }, this.state.text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -320,7 +350,7 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 190,
+        lineNumber: 136,
         columnNumber: 6
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -339,104 +369,20 @@ class HomePageFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 191,
+        lineNumber: 137,
         columnNumber: 7
       }
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      __self: this,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 207,
-        columnNumber: 5
-      }
-    }, this.state.result.map(r => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "result-list-styling",
-        key: r.value,
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 210,
-          columnNumber: 8
-        }
-      }, this.state.objectType === objectTypeOptions[0] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_3__["IconFlag"], {
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 213,
-          columnNumber: 10
-        }
-      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_3__["IconBook"], {
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 215,
-          columnNumber: 10
-        }
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: r.link,
-        __self: this,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 217,
-          columnNumber: 9
-        }
-      }, r.label));
-    })));
+    }))));
   }
 
 }
 
 /***/ }),
 
-/***/ "./assets/filter.js":
-/*!**************************!*\
-  !*** ./assets/filter.js ***!
-  \**************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filter.scss */ "./assets/filter.scss");
-/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_filter_scss__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _component_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./component-filter */ "./assets/component-filter.js");
-var _jsxFileName = "/Users/samanthatseng/Local Sites/ccel/app/public/wp-content/plugins/ccel/assets/filter.js";
-
-
-
-
-react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_component_filter__WEBPACK_IMPORTED_MODULE_3__["default"], {
-  __self: undefined,
-  __source: {
-    fileName: _jsxFileName,
-    lineNumber: 8,
-    columnNumber: 2
-  }
-}), // eslint-disable-next-line no-undef
-document.getElementById('ccel-filter'));
-
-/***/ }),
-
-/***/ "./assets/filter.scss":
-/*!****************************!*\
-  !*** ./assets/filter.scss ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "./assets/icons.js":
-/*!*************************!*\
-  !*** ./assets/icons.js ***!
-  \*************************/
+/***/ "./assets/components/icons.js":
+/*!************************************!*\
+  !*** ./assets/components/icons.js ***!
+  \************************************/
 /*! exports provided: IconBook, IconFlag */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -446,7 +392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IconFlag", function() { return IconFlag; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _jsxFileName = "/Users/samanthatseng/Local Sites/ccel/app/public/wp-content/plugins/ccel/assets/icons.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/assets/components/icons.js";
 
 const IconBook = () => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -490,6 +436,141 @@ const IconFlag = () => {
     }
   }));
 };
+
+/***/ }),
+
+/***/ "./assets/components/list.js":
+/*!***********************************!*\
+  !*** ./assets/components/list.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return List; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./icons */ "./assets/components/icons.js");
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/assets/components/list.js";
+
+
+class List extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+  render() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "result-list",
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 7,
+        columnNumber: 4
+      }
+    }, this.props.content.map(r => {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: r.value,
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 10,
+          columnNumber: 7
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: r.link,
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 11,
+          columnNumber: 8
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "result-list__title",
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 12,
+          columnNumber: 9
+        }
+      }, this.props.objectType === this.props.objectTypeOptions[0] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_1__["IconFlag"], {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 15,
+          columnNumber: 11
+        }
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons__WEBPACK_IMPORTED_MODULE_1__["IconBook"], {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 17,
+          columnNumber: 11
+        }
+      }), r.label)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "result-list__tags",
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 22,
+          columnNumber: 8
+        }
+      }, r.tags.map((tag, index) => {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: index,
+          __self: this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 24,
+            columnNumber: 17
+          }
+        }, tag);
+      })));
+    }));
+  }
+
+}
+
+/***/ }),
+
+/***/ "./assets/filter.js":
+/*!**************************!*\
+  !*** ./assets/filter.js ***!
+  \**************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filter.scss */ "./assets/filter.scss");
+/* harmony import */ var _filter_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_filter_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/app */ "./assets/components/app.js");
+var _jsxFileName = "/Users/kelvin/Local Sites/wp-make/app/public/wp-content/plugins/ccel/assets/filter.js";
+
+
+
+
+react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_app__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  __self: undefined,
+  __source: {
+    fileName: _jsxFileName,
+    lineNumber: 8,
+    columnNumber: 2
+  }
+}), // eslint-disable-next-line no-undef
+document.getElementById('ccel-filter'));
+
+/***/ }),
+
+/***/ "./assets/filter.scss":
+/*!****************************!*\
+  !*** ./assets/filter.scss ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 

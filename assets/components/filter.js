@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import './filter.scss';
-import { IconBook, IconFlag } from './icons';
 import { decodeEntities } from '@wordpress/html-entities';
 
 /**
  * The Filter component.
  */
 
-const objectTypeOptions = [
-	{ value: 'learning outcome', label: 'Learning Outcome' },
-	{ value: 'lesson', label: 'Lesson' },
-];
-
-export default class HomePageFilter extends Component {
+export default class Filter extends Component {
 	constructor(props) {
 		super(props);
 
@@ -22,89 +15,55 @@ export default class HomePageFilter extends Component {
 
 		//set the initial state of the component by assigning an object to this.state
 		this.state = {
-			objectType: objectTypeOptions[0],
 			secondSelected: '',
 			secondOptions: [],
-			result: [],
 			text: 'that aligns with the theme of',
 		};
-		this.getSecondDropdownOptions();
 	}
 
-	// dispatching an action based on state change
-	componentDidUpdate(_prevProps, prevState) {
-		if (prevState.objectType !== this.state.objectType) {
-			this.setState({ secondSelected: null, result: [] });
-			this.getSecondDropdownOptions();
-		}
-
-		if (prevState.secondSelected !== this.state.secondSelected) {
-			this.getFilteredList();
-		}
+	componentDidMount() {
+		this.onChangeObjectType(this.props.objectTypeOptions[0]);
 	}
 
-	getSecondDropdownOptions() {
+	onChangeObjectType(newObjectType) {
 		// eslint-disable-next-line camelcase, prettier/prettier, no-undef
-		const requestURL = this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
+		const requestURL = newObjectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
 		// eslint-disable-next-line prettier/prettier
-		const text = this.state.objectType === objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome';
+		const text = newObjectType === this.props.objectTypeOptions[0] ? 'that aligns with the theme of' : 'that achieves the learning outcome';
 
 		// eslint-disable-next-line
-		this.getData(requestURL, (response) => {
+		this.props.getData(requestURL, (response) => {
 			response = response.map((theme) => {
 				return {
 					value: theme.id,
 					label: decodeEntities(theme.title.rendered),
 				};
 			});
+
+			this.props.setObjectType(newObjectType);
+
 			this.setState({
 				secondOptions: response,
 				text,
+				secondSelected: null,
 			});
 		});
 	}
 
-	getData(url, callback) {
-		fetch(url)
-			.then((res) => res.json())
-			.then((response) => callback(response));
-	}
-
-	onChangeObjectType(e) {
+	onChangeSecondSelected(newSecondDropdownValue) {
 		this.setState({
-			objectType: e,
+			secondSelected: newSecondDropdownValue,
 		});
-	}
 
-	onChangeSecondSelected(e) {
-		this.setState({
-			secondSelected: e,
-		});
-	}
-
-	// get the filtered results list based on selected first and second dropdown
-	getFilteredList() {
-		if (!this.state.secondSelected) {
-			return;
+		if (newSecondDropdownValue) {
+			this.props.getFilteredList(
+				(this.props.objectType === this.props.objectTypeOptions[0]
+					? ubc_ccel.api_endpoint['learning-outcomes-themes']
+					: ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
+					'/' +
+					newSecondDropdownValue.value
+			);
 		}
-		this.getData(
-			// eslint-disable-next-line
-			(this.state.objectType === objectTypeOptions[0] ? ubc_ccel.api_endpoint['learning-outcomes-themes'] : ubc_ccel.api_endpoint['learning-outcomes-lessons']) +
-				'/' +
-				this.state.secondSelected.value,
-			(response) => {
-				response = response.map((so) => {
-					return {
-						value: so.ID,
-						label: decodeEntities(so.post_title),
-						link: decodeEntities(so.guid),
-					};
-				});
-				this.setState({
-					result: response,
-				});
-			}
-		);
 	}
 
 	render() {
@@ -163,10 +122,10 @@ export default class HomePageFilter extends Component {
 						<Select
 							required
 							placeholder="Select Object Type"
-							value={this.state.objectType}
+							value={this.props.objectType}
 							clearable={this.state.clearable}
 							onChange={this.onChangeObjectType}
-							options={objectTypeOptions}
+							options={this.props.objectTypeOptions}
 							components={{
 								IndicatorSeparator: () => null,
 							}}
@@ -190,21 +149,6 @@ export default class HomePageFilter extends Component {
 							styles={selectStyles}
 						></Select>
 					</div>
-				</div>
-				<div>
-					{this.state.result.map((r) => {
-						return (
-							<li className="result-list-styling" key={r.value}>
-								{this.state.objectType ===
-								objectTypeOptions[0] ? (
-									<IconFlag />
-								) : (
-									<IconBook />
-								)}
-								<a href={r.link}>{r.label}</a>
-							</li>
-						);
-					})}
 				</div>
 			</div>
 		);
