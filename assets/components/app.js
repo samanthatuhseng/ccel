@@ -49,6 +49,7 @@ export default class CCELFilter extends Component {
 				return {
 					value: so.ID,
 					label: decodeEntities(so.post_title),
+					// eslint-disable-next-line camelcase, no-undef
 					link: ubc_ccel.site_url + '?p=' + so.ID,
 					tags: so.tags,
 				};

@@ -149,6 +149,7 @@ class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         return {
           value: so.ID,
           label: Object(_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_3__["decodeEntities"])(so.post_title),
+          // eslint-disable-next-line camelcase, no-undef
           link: ubc_ccel.site_url + '?p=' + so.ID,
           tags: so.tags
         };
@@ -200,7 +201,7 @@ class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 118,
+        lineNumber: 119,
         columnNumber: 4
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -215,7 +216,7 @@ class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 119,
+        lineNumber: 120,
         columnNumber: 5
       }
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_list__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -225,7 +226,7 @@ class CCELFilter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 129,
+        lineNumber: 130,
         columnNumber: 5
       }
     }));
@@ -284,7 +285,7 @@ class Filter extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     }
   }
 
-  onChangeObjectType(e) {
+  onChangeObjectType() {
     // eslint-disable-next-line camelcase, prettier/prettier, no-undef
     const requestURL = this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes; // eslint-disable-next-line prettier/prettier
     // eslint-disable-next-line

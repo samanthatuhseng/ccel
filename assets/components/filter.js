@@ -39,7 +39,7 @@ export default class Filter extends Component {
 		}
 	}
 
-	onChangeObjectType(e) {
+	onChangeObjectType() {
 		// eslint-disable-next-line camelcase, prettier/prettier, no-undef
 		const requestURL = this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
 		// eslint-disable-next-line prettier/prettier
