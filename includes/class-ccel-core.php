@@ -28,6 +28,9 @@ class CCEL_Core {
 
 		// shortcode to show the filtering system.
 		add_shortcode( 'ccel_filter', array( $this, 'render_filter' ) );
+
+		// Filter the title and add icons.
+		add_filter( 'the_title', array( $this, 'add_post_type_icon' ), 10, 2 );
 	}
 
 	/**
@@ -376,6 +379,33 @@ class CCEL_Core {
 
 		return '<div id="ccel-filter"></div>';
 	}//end render_filter()
+
+	/**
+	 * Filter post type title and add icons.
+	 *
+	 * @param string $title post title.
+	 * @param Int    $id ID of the post.
+	 *
+	 * @return string
+	 */
+	public function add_post_type_icon( $title, $id = null ) {
+		global $post;
+
+		if ( ! isset( $post ) || $post->ID !== $id || ! in_the_loop() ) {
+			return $title;
+		}
+
+		switch ( $post->post_type ) {
+			case 'ccel_theme':
+				return '<span><i class="icon fa fa-bookmark" aria-hidden="true"></i> Theme</span>' . $title;
+			case 'ccel_lo':
+				return '<span><i class="icon fa fa-flag" aria-hidden="true"></i> Learning Outcome</span>' . $title;
+			case 'ccel_lesson':
+				return '<span><i class="icon fa fa-book" aria-hidden="true"></i> Lesson</span>' . $title;
+			default:
+				return $title;
+		}
+	}
 
 }
 
