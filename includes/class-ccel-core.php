@@ -31,6 +31,9 @@ class CCEL_Core {
 
 		// Filter the title and add icons.
 		add_filter( 'the_title', array( $this, 'add_post_type_icon' ), 10, 2 );
+
+		// Override the breadcrumb structure.
+		add_filter( 'breadcrumb_trail_items', array( $this, 'add_breadcrumb_item' ), 10, 2 );
 	}
 
 	/**
@@ -405,6 +408,39 @@ class CCEL_Core {
 			default:
 				return $title;
 		}
+	}
+
+	/**
+	 * Override the breadcrumb for cpts.
+	 *
+	 * @param array $trail breadcrumb items.
+	 * @param array $args  breadcrumb args.
+	 *
+	 * @return array
+	 */
+	public function add_breadcrumb_item( $trail, $args ) {
+		global $post;
+
+		if ( ! isset( $post ) ) {
+			return $trail;
+		}
+
+		switch ( $post->post_type ) {
+			case 'ccel_theme':
+				$trail[2] = $trail[1];
+				$trail[1] = 'Themes';
+				break;
+			case 'ccel_lo':
+				$trail[2] = $trail[1];
+				$trail[1] = 'Learning Outcomes';
+				break;
+			case 'ccel_lesson':
+				$trail[2] = $trail[1];
+				$trail[1] = 'Lessons';
+				break;
+		}
+
+		return $trail;
 	}
 
 }
