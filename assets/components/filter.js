@@ -41,39 +41,44 @@ export default class Filter extends Component {
 	onChangeObjectType() {
 		// eslint-disable-next-line camelcase, prettier/prettier, no-undef
 		const requestURL = this.props.objectType === this.props.objectTypeOptions[0] ? ubc_ccel.api_endpoint.all_themes : ubc_ccel.api_endpoint.all_learning_outcomes;
+		const perPage = 100;
+		const offset = 0;
 		// eslint-disable-next-line prettier/prettier
 
 		// eslint-disable-next-line
-		this.props.getData(requestURL, (response) => {
-			response = response.map((theme) => {
-				return {
-					value: theme.id,
-					label: decodeEntities(theme.title.rendered),
-				};
-			});
+		this.props.getData(`${requestURL}?per_page=${perPage}&offset=${offset}`, (response) => {
+				response = response.map((theme) => {
+					return {
+						value: theme.id,
+						label: decodeEntities(theme.title.rendered),
+					};
+				});
 
-			this.setState({
-				secondOptions: response,
-			});
+				this.setState({
+					secondOptions: response,
+				});
 
-			if (
-				this.props.searchParams.has('second_dropdown') &&
-				this.props.isLoading &&
-				!isNaN(this.props.searchParams.get('second_dropdown'))
-			) {
-				this.props.setSecondDropdown(
-					response.filter((option) => {
-						return (
-							option.value ===
-							parseInt(
-								this.props.searchParams.get('second_dropdown')
-							)
-						);
-					})[0]
-				);
-				this.props.disableLoading();
+				if (
+					this.props.searchParams.has('second_dropdown') &&
+					this.props.isLoading &&
+					!isNaN(this.props.searchParams.get('second_dropdown'))
+				) {
+					this.props.setSecondDropdown(
+						response.filter((option) => {
+							return (
+								option.value ===
+								parseInt(
+									this.props.searchParams.get(
+										'second_dropdown'
+									)
+								)
+							);
+						})[0]
+					);
+					this.props.disableLoading();
+				}
 			}
-		});
+		);
 	}
 
 	render() {
