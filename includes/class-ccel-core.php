@@ -98,7 +98,7 @@ class CCEL_Core {
 			array(
 				'labels'       => $theme_labels,
 				'public'       => true,
-				'menu_icon'    => 'dashicons-category',
+				'menu_icon'    => 'dashicons-pressthis',
 				'supports'     => array( 'editor', 'thumbnail', 'title', 'excerpt', 'revision' ),
 				'show_in_rest' => true,
 				'rewrite'      => array(
@@ -112,7 +112,7 @@ class CCEL_Core {
 			array(
 				'labels'       => $learning_outcome_labels,
 				'public'       => true,
-				'menu_icon'    => 'dashicons-category',
+				'menu_icon'    => 'dashicons-flag',
 				'supports'     => array( 'editor', 'thumbnail', 'title', 'excerpt', 'revision' ),
 				'show_in_rest' => true,
 				'rewrite'      => array(
@@ -126,7 +126,7 @@ class CCEL_Core {
 			array(
 				'labels'       => $lesson_labels,
 				'public'       => true,
-				'menu_icon'    => 'dashicons-category',
+				'menu_icon'    => 'dashicons-book',
 				'supports'     => array( 'editor', 'thumbnail', 'title', 'excerpt', 'revision' ),
 				'show_in_rest' => true,
 				'rewrite'      => array(
