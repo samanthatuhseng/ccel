@@ -13,6 +13,9 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 2.0.2
+Hotfix: Add icons back to the archive template and fixed the styling.
+
 ### 2.0.1
 Hotfix: restrict the icons to the custom post types title to single post template only.
 

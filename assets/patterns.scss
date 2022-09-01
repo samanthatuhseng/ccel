@@ -69,6 +69,7 @@
 .ccel_lo-title,
 .ccel_theme-title,
 .ccel_lesson-title {
+    // Styling for single post template
     display: flex;
     flex-direction: column;
 
@@ -81,6 +82,24 @@
         
         > i {
             margin-right: 5px;
+        }
+    }
+
+    // Styling for archive template
+    > a {
+        display: flex;
+        flex-direction: column;
+
+        > span{
+            font-size: .9rem;
+            font-weight: 300;
+            font-style: italic;
+            text-transform: uppercase;
+            line-height: 100%;
+            
+            > i {
+                margin-right: 5px;
+            }
         }
     }
 }
