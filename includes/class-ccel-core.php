@@ -394,7 +394,7 @@ class CCEL_Core {
 	public function add_post_type_icon( $title, $id = null ) {
 		global $post;
 
-		if ( ! isset( $post ) || $post->ID !== $id || ! in_the_loop() ) {
+		if ( ! isset( $post ) || $post->ID !== $id || ! in_the_loop() || ! is_singular() ) {
 			return $title;
 		}
 

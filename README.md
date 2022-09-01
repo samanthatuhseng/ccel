@@ -13,6 +13,9 @@ Build JS and CSS for production
 
 ## Change Log
 
+### 2.0.1
+Hotfix: restrict the icons to the custom post types title to single post template only.
+
 ### 2.0.0
 - Add frontend UI
 
