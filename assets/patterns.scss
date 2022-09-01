@@ -69,7 +69,7 @@
 .ccel_lo-title,
 .ccel_theme-title,
 .ccel_lesson-title {
-    // Styling for single post template
+    // Styling for post title without link
     display: flex;
     flex-direction: column;
 
@@ -85,7 +85,7 @@
         }
     }
 
-    // Styling for archive template
+    // Styling for post title with link
     > a {
         display: flex;
         flex-direction: column;

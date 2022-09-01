@@ -394,7 +394,11 @@ class CCEL_Core {
 	public function add_post_type_icon( $title, $id = null ) {
 		global $post;
 
-		if ( ! isset( $post ) || $post->ID !== $id || ! in_the_loop() || ( ! is_singular() && ! is_archive() ) ) {
+		if ( ! isset( $post ) || $post->ID !== $id || ! in_the_loop() ) {
+			return $title;
+		}
+
+		if ( ! is_singular() && ! is_archive() && ! is_search() ) {
 			return $title;
 		}
 
